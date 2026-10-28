@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Inas Gedichte-Abenteuer</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#7C4DFF;--pl:#B388FF;--pd:#6200EA;--s:#FF6D00;--sl:#FFAB40;--ok:#00C853;--okl:#69F0AE;--err:#FF1744;--warn:#FFD600;--bg:#F5F0FF;--bgc:#fff;--t:#1A1A2E;--tl:#5C5C7A;--r:16px;--r2:12px;--r3:8px;--sh:0 4px 20px rgba(124,77,255,.12);--sh2:0 8px 32px rgba(124,77,255,.18);--font:"Segoe UI",system-ui,sans-serif}
+html{scroll-behavior:smooth}body{font-family:var(--font);background:var(--bg);color:var(--t);min-height:100vh;line-height:1.6;overflow-x:hidden;padding-bottom:60px}
+h1,h2,h3,h4{line-height:1.3}button{font-family:var(--font);cursor:pointer;border:none;outline:none}input,textarea,select{font-family:var(--font);outline:none}
+.hd{background:linear-gradient(135deg,var(--p),#9C27B0,var(--s));color:#fff;padding:18px 16px 14px;text-align:center;position:sticky;top:0;z-index:1000;box-shadow:0 4px 20px rgba(124,77,255,.3)}
+.hd h1{font-size:1.5em}.hd .sub{opacity:.9;font-size:.85em;margin-top:2px}
+.hnav{display:flex;justify-content:center;gap:6px;margin-top:10px;flex-wrap:wrap}
+.hnav button{background:rgba(255,255,255,.18);color:#fff;border:2px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:50px;font-size:.78em;font-weight:600;transition:all .3s}
+.hnav button:hover,.hnav button.on{background:#fff;color:var(--p);border-color:#fff}
+.ct{max-width:860px;margin:0 auto;padding:16px}
+.card{background:var(--bgc);border-radius:var(--r);padding:22px;box-shadow:var(--sh);margin-bottom:14px}
+.card h2{color:var(--pd);margin-bottom:6px}.card h3{color:var(--p);margin-bottom:4px}
+.hg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:14px}
+.hc{background:var(--bgc);border-radius:var(--r);padding:18px;box-shadow:var(--sh);cursor:pointer;transition:all .3s;border-left:5px solid var(--p);position:relative}
+.hc:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.hc .icon{font-size:1.8em;margin-bottom:6px}.hc .tit{font-size:1.05em;font-weight:700;margin-bottom:3px}.hc .desc{font-size:.82em;color:var(--tl);margin-bottom:8px}
+.pbar{background:#E8E0F0;border-radius:20px;height:10px;overflow:hidden;margin-bottom:3px}
+.pfill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--ok),var(--okl));transition:width .6s}
+.hc .pct{font-size:.75em;color:var(--tl);font-weight:600}
+.hc:nth-child(2){border-left-color:#E91E63}.hc:nth-child(3){border-left-color:#FF9800}.hc:nth-child(4){border-left-color:#4CAF50}
+.hc:nth-child(5){border-left-color:#2196F3}.hc:nth-child(6){border-left-color:#9C27B0}.hc:nth-child(7){border-left-color:#F44336}
+.hc:nth-child(8){border-left-color:#009688}.hc:nth-child(9){border-left-color:#FF5722}.hc:nth-child(10){border-left-color:#FFD600}
+.hc .bdg{position:absolute;top:8px;right:10px;font-size:1.3em}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:50px;font-size:.95em;font-weight:700;transition:all .3s;margin:4px;text-align:center;justify-content:center}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(0)}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--pd));color:#fff;box-shadow:0 4px 12px rgba(124,77,255,.3)}
+.btn-ok{background:linear-gradient(135deg,var(--ok),#00E676);color:#fff}
+.btn-w{background:linear-gradient(135deg,var(--s),#FF8F00);color:#fff}
+.btn-o{background:transparent;border:2px solid var(--p);color:var(--p)}.btn-o:hover{background:var(--p);color:#fff}
+.btn-d{background:linear-gradient(135deg,var(--err),#D50000);color:#fff}
+.btn-g{background:rgba(124,77,255,.08);color:var(--p)}.btn-g:hover{background:rgba(124,77,255,.15)}
+.btn-sm{padding:7px 14px;font-size:.82em}.btn-lg{padding:14px 30px;font-size:1.05em}
+.eq{font-size:1.1em;font-weight:600;margin-bottom:14px;line-height:1.5}
+.ei{font-size:.88em;color:var(--tl);margin-bottom:10px;font-style:italic}
+.poem{background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border-radius:var(--r2);padding:18px 22px;margin:10px 0;font-size:1.02em;line-height:2;border-left:4px solid var(--sl);white-space:pre-line}
+.mco{display:flex;flex-direction:column;gap:8px}
+.mc{background:var(--bgc);border:2px solid #E0D8F0;border-radius:var(--r2);padding:12px 16px;cursor:pointer;transition:all .3s;font-size:.98em;text-align:left;display:flex;align-items:center;gap:10px;min-height:44px}
+.mc:hover{border-color:var(--pl);background:#F8F4FF;transform:translateX(4px)}
+.mc.sel{border-color:var(--p);background:#EDE7F6;font-weight:600}
+.mc.ok{border-color:var(--ok);background:#E8F5E9}.mc.no{border-color:var(--err);background:#FFEBEE}
+.mc .ml{min-width:28px;height:28px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82em;flex-shrink:0}
+.mc.ok .ml{background:var(--ok)}.mc.no .ml{background:var(--err)}
+.syl-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:14px 0}
+.syl{padding:10px 14px;border:2px solid #D0C8E0;border-radius:var(--r3);background:var(--bgc);font-size:1.1em;cursor:pointer;transition:all .2s;min-width:48px;text-align:center;user-select:none}
+.syl:hover{border-color:var(--pl);background:#F8F4FF}
+.syl.str{border-color:var(--p);background:linear-gradient(135deg,#EDE7F6,#D1C4E9);font-weight:700}
+.syl.c-ok{border-color:var(--ok);background:#E8F5E9}.syl.c-no{border-color:var(--err);background:#FFEBEE}
+.rr{display:flex;align-items:center;gap:10px;margin:6px 0;padding:6px 10px;background:var(--bgc);border-radius:var(--r3);border:2px solid transparent}
+.rr:hover{border-color:#E0D8F0}
+.rr .vt{flex:1}.rr .ew{font-weight:700;color:var(--p)}
+.rr select{width:48px;height:36px;border:2px solid #D0C8E0;border-radius:var(--r3);font-size:1.05em;font-weight:700;text-align:center;background:var(--bgc);color:var(--p)}
+.hw{display:inline-block;padding:2px 5px;margin:1px;border-radius:4px;cursor:pointer;transition:all .2s;border:2px solid transparent}
+.hw:hover{background:rgba(124,77,255,.1);border-color:rgba(124,77,255,.2)}
+.hw.sel{background:#EDE7F6;border-color:var(--p);font-weight:600}
+.hw.ok{background:#E8F5E9;border-color:var(--ok)}.hw.no{background:#FFEBEE;border-color:var(--err)}
+.tf{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.tfb{flex:1;min-width:120px;max-width:200px;padding:12px 18px;border-radius:var(--r2);font-size:1em;font-weight:700;cursor:pointer;transition:all .3s;border:2px solid #E0D8F0;background:var(--bgc)}
+.tfb:hover{transform:translateY(-2px)}
+.tfb.ok{border-color:var(--ok);background:#E8F5E9}.tfb.no{border-color:var(--err);background:#FFEBEE}
+.fi{width:100%;max-width:400px;padding:10px 14px;font-size:1em;border:3px solid #E0D8F0;border-radius:var(--r2);text-align:center;transition:all .3s;background:var(--bgc)}
+.fi:focus{border-color:var(--p)}.fi.ok{border-color:var(--ok);background:#E8F5E9}.fi.no{border-color:var(--err);background:#FFEBEE}
+.ft{width:100%;min-height:80px;padding:12px;border:3px solid #E0D8F0;border-radius:var(--r2);font-size:.98em;resize:vertical;transition:all .3s;line-height:1.5}
+.ft:focus{border-color:var(--p)}
+.fb{border-radius:var(--r2);padding:14px 18px;margin:10px 0;font-size:.92em;line-height:1.5;animation:fadeIn .4s}
+.fb-ok{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border-left:4px solid var(--ok);color:#1B5E20}
+.fb-no{background:linear-gradient(135deg,#FFEBEE,#FFCDD2);border-left:4px solid var(--err);color:#B71C1C}
+.fb-hint{background:linear-gradient(135deg,#FFF8E1,#FFECB3);border-left:4px solid var(--warn);color:#E65100}
+.fb-info{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);border-left:4px solid #2196F3;color:#0D47A1}
+.fb-sol{background:linear-gradient(135deg,#F3E5F5,#E1BEE7);border-left:4px solid #9C27B0;color:#4A148C}
+.tc{background:linear-gradient(135deg,#F3E5F5,#E8EAF6);border-radius:var(--r);padding:18px;margin:10px 0;border-left:5px solid var(--p)}
+.tc h3{color:var(--pd);margin-bottom:6px}
+.tc .ex{background:rgba(255,255,255,.6);border-radius:var(--r3);padding:10px;margin:6px 0;font-style:italic}
+.tc .merk{background:linear-gradient(135deg,#FFFDE7,#FFF9C4);border-radius:var(--r3);padding:10px;margin:6px 0;border-left:4px solid var(--warn);font-weight:600}
+.ltab{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.lt{padding:7px 14px;border:2px solid #E0D8F0;border-radius:50px;background:var(--bgc);font-size:.82em;font-weight:600;cursor:pointer;transition:all .3s}
+.lt:hover{border-color:var(--pl)}.lt.on{background:var(--p);color:#fff;border-color:var(--p)}.lt.done{border-color:var(--ok);color:var(--ok)}
+.badge-r{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;justify-content:center}
+.bdg-i{background:var(--bgc);border:2px solid #E0D8F0;border-radius:var(--r2);padding:8px 14px;text-align:center;min-width:90px}
+.bdg-i.earned{border-color:var(--warn);background:linear-gradient(135deg,#FFFDE7,#FFF9C4)}
+.bdg-i .bi{font-size:1.8em;margin-bottom:2px}.bdg-i .bn{font-size:.72em;font-weight:700;color:var(--tl)}.bdg-i.earned .bn{color:var(--t)}
+.streak{display:inline-flex;align-items:center;gap:5px;background:linear-gradient(135deg,#FFF3E0,#FFE0B2);padding:5px 12px;border-radius:50px;font-weight:700;font-size:.88em;color:#E65100}
+.mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}
+.mi{background:var(--bgc);border:2px solid #E0D8F0;border-radius:var(--r2);padding:10px 14px;cursor:pointer;transition:all .3s;text-align:center;font-weight:600;min-height:44px;display:flex;align-items:center;justify-content:center}
+.mi:hover{border-color:var(--pl)}.mi.sel{border-color:var(--p);background:#EDE7F6}.mi.matched{border-color:var(--ok);background:#E8F5E9;opacity:.7;cursor:default}
+.exhd{background:linear-gradient(135deg,#1A237E,#283593);color:#fff;border-radius:var(--r);padding:22px;text-align:center;margin-bottom:14px}
+.sc-card{background:var(--bgc);border:2px solid #E0D8F0;border-radius:var(--r);padding:18px;margin:10px 0}
+.sc-card h4{margin-bottom:8px;color:var(--p)}
+.cklist{list-style:none;padding:0}.cklist li{padding:6px 0;display:flex;align-items:center;gap:8px;font-size:.92em}
+.cklist input[type="checkbox"]{width:18px;height:18px;accent-color:var(--p)}
+.pt{width:100%;border-collapse:collapse;margin:10px 0}
+.pt th,.pt td{padding:8px 10px;text-align:left;border-bottom:1px solid #B0BEC5}.pt th{background:#455A64;color:#fff;font-size:.85em}.pt tr:hover{background:rgba(0,0,0,.04)}
+.ss-c{background:var(--bgc);border:2px dashed var(--pl);border-radius:var(--r2);padding:14px;margin:6px 0}
+.ss-c .starter{font-weight:600;color:var(--pd);font-size:.98em;line-height:1.6}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+@media(max-width:768px){.hd h1{font-size:1.25em}.ct{padding:10px}.card{padding:16px}.hg{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.poem{padding:12px 14px;font-size:.92em}.syl{padding:8px 10px;min-width:40px}}
+@media(max-width:480px){.hd{padding:12px 8px 10px}.hd h1{font-size:1.1em}.hnav button{padding:4px 8px;font-size:.7em}.hc{padding:12px}.tf{flex-direction:column}.tfb{max-width:100%}.ltab{gap:3px}.lt{padding:5px 10px;font-size:.78em}}
+@media(min-width:1024px){.ct{max-width:920px}.hg{grid-template-columns:repeat(3,1fr)}}
+</style></head>
+<body>
+<div class="hd"><h1>🌟 Inas Gedichte-Abenteuer 🌟</h1><p class="sub">Fit für den Deutschtest – Schritt für Schritt zur sicheren Gedichtanalyse</p><div class="hnav"><button onclick="nav('home')" id="nb-home">🏠 Start</button><button onclick="nav('bib')" id="nb-bib">📖 Bibliothek</button><button onclick="nav('satz')" id="nb-satz">✍️ Satzstarter</button><button onclick="nav('quick')" id="nb-quick">⚡ Wiederholung</button><button onclick="nav('eltern')" id="nb-eltern">👨‍👩‍👧 Für Eltern</button></div></div>
+<div class="ct"><div id="main"></div></div>
+<div id="mbg" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:2000;justify-content:center;align-items:center;padding:16px" onclick="if(event.target===this)closeModal()"><div id="mbox" style="background:#fff;border-radius:16px;padding:28px;max-width:500px;width:100%;box-shadow:0 8px 32px rgba(124,77,255,.18)"></div></div>
+<div id="cft" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden"></div>
+<script>
+/*JSSTART*/
+'use strict';
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s),M=document.getElementById('main');
+const TOPICS=[
+{id:'grund',icon:'📚',title:'Grundlagen',desc:'Gedicht, Vers, Strophe, Reim',color:'#7C4DFF'},
+{id:'reim',icon:'🎵',title:'Reim & Reimschema',desc:'Paarreim, Kreuzreim, Umarmender Reim',color:'#E91E63'},
+{id:'metrum',icon:'👏',title:'Metrum',desc:'Silben, Hebung, Senkung, Versmaß',color:'#FF9800'},
+{id:'bilder',icon:'🎨',title:'Sprachliche Bilder',desc:'Überblick: Vergleich, Personifikation, Metapher',color:'#4CAF50'},
+{id:'vergleich',icon:'🔍',title:'Vergleich',desc:'wie, als, als ob – zwei Dinge vergleichen',color:'#2196F3'},
+{id:'person',icon:'🌳',title:'Personifikation',desc:'Wenn Dinge menschlich handeln',color:'#9C27B0'},
+{id:'metapher',icon:'💡',title:'Metapher',desc:'Bildliche Übertragung',color:'#F44336'},
+{id:'mixed',icon:'🧩',title:'Alles gemischt',desc:'Vergleich, Personifikation oder Metapher?',color:'#009688'},
+{id:'pruef',icon:'🎯',title:'Prüfungstraining',desc:'Gemischte Übungen wie im Test',color:'#FF5722'},
+{id:'exam',icon:'🏆',title:'Große Abschlussprüfung',desc:'Teste dein Wissen!',color:'#FFD600'}
+];
+const LEVELS=['Verstehen','Erkennen','Anwenden','Erklären','Selbst machen','Mini-Test'];
+const BADGES=[
+{id:'reim-profi',icon:'🎵',name:'Reim-Profi',req:{topic:'reim',pct:80}},
+{id:'metrum-det',icon:'🥁',name:'Metrum-Detektivin',req:{topic:'metrum',pct:80}},
+{id:'bilder-exp',icon:'🎨',name:'Bilder-Expertin',req:{topic:'mixed',pct:80}},
+{id:'gedichte-m',icon:'👑',name:'Gedichte-Meisterin',req:{topic:'exam',pct:80}},
+{id:'vergleich-p',icon:'🔍',name:'Vergleich-Profi',req:{topic:'vergleich',pct:80}},
+{id:'person-p',icon:'🌳',name:'Personifikation-Profi',req:{topic:'person',pct:80}},
+{id:'metapher-p',icon:'💡',name:'Metapher-Profi',req:{topic:'metapher',pct:80}},
+{id:'grund-p',icon:'📚',name:'Grundlagen-Profi',req:{topic:'grund',pct:80}}
+];
+/* PROGRESS */
+let P={};
+function loadP(){try{P=JSON.parse(localStorage.getItem('iga-progress'))||{}}catch(e){P={}}
+if(!P.topics)P.topics={};if(!P.stars)P.stars=0;if(!P.streak)P.streak=0;if(!P.lastDay)P.lastDay='';if(!P.badges)P.badges=[];if(!P.attempts)P.attempts={};if(!P.examResults)P.examResults=[];}
+function saveP(){localStorage.setItem('iga-progress',JSON.stringify(P))}
+function getTP(tid){if(!P.topics[tid])P.topics[tid]={correct:0,wrong:0,total:0,level:0,hints:0};return P.topics[tid]}
+function getPct(tid){let t=getTP(tid);return t.total===0?0:Math.round(t.correct/Math.max(t.total,1)*100)}
+function recordAnswer(tid,qid,correct,hintsUsed){
+let t=getTP(tid);t.total++;if(correct)t.correct++;else t.wrong++;t.hints+=(hintsUsed||0);
+if(!P.attempts[tid])P.attempts[tid]={};P.attempts[tid][qid]={correct,hints:hintsUsed||0,time:Date.now()};
+checkStreak();checkBadges();saveP();
+}
+function checkStreak(){let today=new Date().toISOString().slice(0,10);
+if(P.lastDay!==today){let yd=new Date();yd.setDate(yd.getDate()-1);
+if(P.lastDay===yd.toISOString().slice(0,10))P.streak++;else P.streak=1;P.lastDay=today;}}
+function checkBadges(){BADGES.forEach(b=>{if(!P.badges.includes(b.id)&&getPct(b.req.topic)>=b.req.pct){P.badges.push(b.id);saveP();showBadgeEarned(b);}})}
+function showBadgeEarned(b){showModal(`<div style="text-align:center"><div style="font-size:3em;margin-bottom:10px">${b.icon}</div><h3>🎉 Neues Abzeichen!</h3><p style="font-size:1.1em;margin:8px 0;font-weight:700">${b.name}</p><p style="color:var(--tl)">Toll gemacht, Ina!</p><button class="btn btn-p" onclick="closeModal()" style="margin-top:12px">Super! 🌟</button></div>`);fireConfetti();}
+/* MODAL */
+function showModal(html){let bg=$('#mbg');bg.style.display='flex';$('#mbox').innerHTML=html}
+function closeModal(){$('#mbg').style.display='none'}
+/* CONFETTI */
+function fireConfetti(){let c=$('#cft');c.innerHTML='';let cols=['#7C4DFF','#FF6D00','#00C853','#FF1744','#FFD600','#E91E63','#2196F3'];
+for(let i=0;i<40;i++){let d=document.createElement('div');d.style.cssText=`position:absolute;width:${8+Math.random()*8}px;height:${8+Math.random()*8}px;background:${cols[i%cols.length]};left:${Math.random()*100}%;top:-10px;border-radius:${Math.random()>.5?'50%':'2px'};animation:confettiFall ${2+Math.random()*2}s ease-out forwards;animation-delay:${Math.random()*.5}s`;c.appendChild(d)}
+setTimeout(()=>c.innerHTML='',4000)}
+/* SPEECH */
+function speak(text){if('speechSynthesis' in window){let u=new SpeechSynthesisUtterance(text);u.lang='de-DE';u.rate=0.85;speechSynthesis.speak(u)}}
+/*NAV*/
+let curSection='home';
+function nav(id){curSection=id;$$('.hnav button').forEach(b=>b.classList.remove('on'));
+let nb=$(`#nb-${id}`);if(nb)nb.classList.add('on');
+window.scrollTo({top:0,behavior:'smooth'});
+if(id==='home')renderHome();else if(id==='bib')renderBib();else if(id==='satz')renderSatz();
+else if(id==='quick')renderQuick();else if(id==='eltern')renderEltern();}
+function openTopic(tid,level){renderTopic(tid,level||0)}
+/*HOME*/
+function renderHome(){
+let h='<div class="card" style="text-align:center"><h2>Willkommen, Ina! 👋</h2><p>Hier lernst du alles über Gedichte – Schritt für Schritt. Wähle ein Thema und leg los!</p>';
+h+=`<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:10px"><div class="streak">🔥 ${P.streak||0} Tage am Stück</div><div class="streak" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9);color:#1B5E20">⭐ ${P.stars||0} Wissensterne</div></div></div>`;
+h+='<div class="badge-r">';BADGES.forEach(b=>{let e=P.badges&&P.badges.includes(b.id);h+=`<div class="bdg-i${e?' earned':''}"><div class="bi">${e?b.icon:'🔒'}</div><div class="bn">${b.name}</div></div>`});h+='</div>';
+h+='<div class="hg">';TOPICS.forEach((t,i)=>{let pct=getPct(t.id);let st=pct>=80?'🟢':pct>=40?'🟡':'';
+h+=`<div class="hc" onclick="${t.id==='exam'?'startExam()':'openTopic(\''+t.id+'\')'}"><div class="icon">${t.icon}</div><div class="tit">${t.title}</div><div class="desc">${t.desc}</div><div class="pbar"><div class="pfill" style="width:${pct}%"></div></div><div class="pct">${pct}% ${st}</div>${P.badges&&P.badges.some(b=>BADGES.find(x=>x.id===b)?.req.topic===t.id)?'<div class="bdg">🏅</div>':''}</div>`});
+h+='</div>';
+h+=`<div class="card" style="margin-top:14px;text-align:center"><button class="btn btn-d btn-sm" onclick="resetProgress()">🗑️ Fortschritt zurücksetzen</button></div>`;
+M.innerHTML=h}
+function resetProgress(){showModal('<h3>⚠️ Fortschritt zurücksetzen?</h3><p style="margin:10px 0">Alle deine Lernfortschritte, Sterne und Abzeichen werden gelöscht. Das kann nicht rückgängig gemacht werden!</p><div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px"><button class="btn btn-o btn-sm" onclick="closeModal()">Abbrechen</button><button class="btn btn-d btn-sm" onclick="doReset()">Ja, zurücksetzen</button></div>')}
+function doReset(){localStorage.removeItem('iga-progress');P={};loadP();closeModal();nav('home')}
+/*RENDER_TOPIC*/
+let curQ=null,curQIdx=0,curAttempts=0,curHints=0,curTopic='',curLevel=0,curQs=[];
+function renderTopic(tid,level){
+curTopic=tid;curLevel=level||0;curQIdx=0;curAttempts=0;curHints=0;
+let tp=TOPICS.find(t=>t.id===tid);if(!tp)return;
+let qs=getQuestions(tid,curLevel);curQs=shuffle(qs).slice(0,Math.min(qs.length,10));
+let h=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap"><button class="btn btn-g btn-sm" onclick="nav('home')">← Zurück</button><h2 style="flex:1">${tp.icon} ${tp.title}</h2></div>`;
+h+='<div class="ltab">';LEVELS.forEach((l,i)=>{let cls=i===curLevel?'on':'';let tp2=getTP(tid);
+h+=`<button class="lt ${cls}" onclick="renderTopic('${tid}',${i})">${l}</button>`});h+='</div>';
+if(curLevel===0){h+=getTheory(tid);h+=`<div style="text-align:center;margin-top:14px"><button class="btn btn-p" onclick="renderTopic('${tid}',1)">Weiter zum Üben →</button></div>`}
+else if(curQs.length===0){h+=`<div class="card"><p>Für dieses Level gibt es noch keine Fragen. Probiere ein anderes Level!</p></div>`}
+else{h+=`<div id="exArea"></div>`}
+M.innerHTML=h;
+if(curLevel>0&&curQs.length>0)showQuestion()}
+function showQuestion(){
+if(curQIdx>=curQs.length){showResults();return}
+curAttempts=0;curHints=0;let q=curQs[curQIdx];curQ=q;
+let area=$('#exArea')||document.createElement('div');
+let h=`<div class="card" style="animation:fadeIn .4s"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap"><span style="font-size:.82em;color:var(--tl);font-weight:600">Frage ${curQIdx+1} von ${curQs.length}</span><div class="pbar" style="width:120px"><div class="pfill" style="width:${Math.round(curQIdx/curQs.length*100)}%"></div></div></div>`;
+if(q.poem)h+=`<div class="poem">${q.poem}</div>`;
+h+=`<div class="eq">${q.q}</div>`;
+if(q.instruction)h+=`<div class="ei">${q.instruction}</div>`;
+h+=`<div id="qBody">${renderQBody(q)}</div>`;
+h+=`<div id="qFeedback"></div>`;
+h+=`<div id="qActions" style="margin-top:12px;text-align:center">`;
+if(q.type==='free'||q.type==='fill'||q.type==='syllable'||q.type==='rhyme-assign')
+h+=`<button class="btn btn-p" onclick="checkAnswer()">Überprüfen ✓</button>`;
+h+=`</div></div>`;
+if(area.id==='exArea')area.innerHTML=h;else{area.id='exArea';M.appendChild(area);area.innerHTML=h}}
+function renderQBody(q){
+let h='';
+switch(q.type){
+case 'mc':h+='<div class="mco">';q.options.forEach((o,i)=>{h+=`<button class="mc" onclick="selectMC(this,${i})" data-idx="${i}"><span class="ml">${String.fromCharCode(65+i)}</span><span>${o}</span></button>`});h+='</div>';break;
+case 'tf':h+=`<div class="tf"><button class="tfb" onclick="selectTF(true)">✅ Stimmt</button><button class="tfb" onclick="selectTF(false)">❌ Stimmt nicht</button></div>`;break;
+case 'fill':h+=`<div style="text-align:center"><input class="fi" type="text" id="fillInput" placeholder="Deine Antwort..." onkeydown="if(event.key==='Enter')checkAnswer()"></div>`;break;
+case 'free':h+=`<textarea class="ft" id="freeInput" placeholder="Schreibe deine Antwort hier..."></textarea>`;break;
+case 'highlight':{ let words=q.text.split(/\s+/);h='<div style="line-height:2.2;font-size:1.05em">';words.forEach((w,i)=>{h+=`<span class="hw" onclick="toggleHW(this)" data-w="${w.replace(/[^a-zäöüßA-ZÄÖÜ]/g,'').toLowerCase()}">${w}</span> `});h+='</div>';break; }
+case 'syllable':h='<div class="syl-row" id="sylRow">';q.syllables.forEach((s,i)=>{h+=`<button class="syl" onclick="toggleSyl(this,${i})" data-idx="${i}">${s}</button>`});h+='</div><div class="rhy-display" id="rhyDisp"></div>';break;
+case 'rhyme-assign':h='<div id="rhyAssign">';q.verses.forEach((v,i)=>{let lastW=v.trim().split(/\s+/).pop();h+=`<div class="rr"><span class="vt">${v} <span class="ew">${lastW}</span></span><select id="rl${i}"><option value="">?</option><option value="a">a</option><option value="b">b</option><option value="c">c</option><option value="d">d</option></select></div>`});h+='</div>';break;
+case 'match':{ let items=[...q.left.map((l,i)=>({text:l,side:'l',idx:i})),...q.right.map((r,i)=>({text:r,side:'r',idx:i}))];items=shuffle(items);h='<div class="mgrid" id="matchGrid">';items.forEach((it,i)=>{h+=`<div class="mi" onclick="selectMatch(this)" data-side="${it.side}" data-idx="${it.idx}">${it.text}</div>`});h+='</div>';break; }
+case 'order':{ let shuffled=shuffle([...q.items]);h='<div class="oi" id="orderList">';shuffled.forEach((it,i)=>{h+=`<div class="oit" draggable="true" data-val="${it}" ondragstart="dragStart(event)" ondragover="event.preventDefault()" ondrop="dropItem(event)"><span class="on">${i+1}</span><span>${it}</span></div>`});h+='</div>';break; }
+default:h+='<p>Unbekannter Fragetyp</p>'}
+return h}
+/*ANSWERS*/
+let mcSel=-1,tfSel=null,matchSel=null,matchPairs=[];
+function selectMC(el,idx){$$('.mc').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');mcSel=idx;checkAnswer()}
+function selectTF(val){tfSel=val;checkAnswer()}
+function toggleHW(el){el.classList.toggle('sel')}
+function toggleSyl(el,idx){el.classList.toggle('str');updateRhyDisp()}
+function updateRhyDisp(){let d=$('#rhyDisp');if(!d)return;let syls=$$('.syl');let r='';syls.forEach(s=>{r+=s.classList.contains('str')?'<span style="font-weight:700;color:var(--p)">x\u0301</span> ':'<span style="color:var(--tl)">x</span> '});d.innerHTML=r}
+function selectMatch(el){if(el.classList.contains('matched'))return;
+if(!matchSel){el.classList.add('sel');matchSel=el}
+else{if(matchSel===el){el.classList.remove('sel');matchSel=null;return}
+let s1=matchSel.dataset.side,i1=+matchSel.dataset.idx,s2=el.dataset.side,i2=+el.dataset.idx;
+if(s1===s2){matchSel.classList.remove('sel');el.classList.add('sel');matchSel=el;return}
+let li=s1==='l'?i1:i2,ri=s1==='r'?i1:i2;
+if(curQ.pairs[li]===ri){matchSel.classList.remove('sel');matchSel.classList.add('matched');el.classList.add('matched');matchPairs.push(li);matchSel=null;
+if(matchPairs.length===curQ.left.length){showFB(true,curQ.explanation||'Alle Paare richtig zugeordnet! 🎉')}}
+else{matchSel.classList.remove('sel');el.style.animation='shake .4s';matchSel.style.animation='shake .4s';setTimeout(()=>{el.style.animation='';if(matchSel)matchSel.style.animation=''},400);matchSel=null}}}
+let dragEl=null;
+function dragStart(e){dragEl=e.target.closest('.oit');e.dataTransfer.effectAllowed='move'}
+function dropItem(e){e.preventDefault();let target=e.target.closest('.oit');if(!target||target===dragEl)return;
+let list=$('#orderList');let items=[...list.children];let dIdx=items.indexOf(dragEl),tIdx=items.indexOf(target);
+if(dIdx<tIdx)target.after(dragEl);else target.before(dragEl);
+[...list.children].forEach((c,i)=>c.querySelector('.on').textContent=i+1)}
+/*CHECK_ANSWER*/
+function checkAnswer(){
+let q=curQ;if(!q)return;let correct=false;let userAns='';
+switch(q.type){
+case 'mc':if(mcSel<0)return;correct=(mcSel===q.answer);
+$$('.mc').forEach((b,i)=>{b.style.pointerEvents='none';if(i===q.answer)b.classList.add('ok');if(i===mcSel&&!correct)b.classList.add('no')});break;
+case 'tf':if(tfSel===null)return;correct=(tfSel===q.answer);
+$$('.tfb').forEach(b=>b.style.pointerEvents='none');
+$$('.tfb').forEach((b,i)=>{if((i===0&&q.answer)||(i===1&&!q.answer))b.classList.add('ok');if((i===0&&tfSel&&!correct)||(i===1&&!tfSel&&!correct))b.classList.add('no')});break;
+case 'fill':{ let inp=$('#fillInput');if(!inp||!inp.value.trim())return;userAns=inp.value.trim().toLowerCase();
+let accepts=Array.isArray(q.answer)?q.answer:[q.answer];correct=accepts.some(a=>userAns===a.toLowerCase()||userAns.replace(/[.,!?;:]/g,'')===a.toLowerCase().replace(/[.,!?;:]/g,''));
+inp.classList.add(correct?'ok':'no');if(correct)inp.readOnly=true;break; }
+case 'free':{ let ta=$('#freeInput');if(!ta||!ta.value.trim())return;userAns=ta.value.trim();
+if(q.keywords){let lw=userAns.toLowerCase();let found=q.keywords.filter(k=>lw.includes(k.toLowerCase()));correct=found.length>=(q.minKeywords||1)}else{correct=true}break; }
+case 'highlight':{ let selW=[];$$('.hw.sel').forEach(w=>selW.push(w.dataset.w));let expW=q.answer.map(w=>w.toLowerCase());
+correct=expW.length===selW.length&&expW.every(w=>selW.includes(w));
+$$('.hw').forEach(w=>{let wl=w.dataset.w;if(expW.includes(wl))w.classList.add('ok');else if(w.classList.contains('sel'))w.classList.add('no')});break; }
+case 'syllable':{ let stressed=[];$$('.syl').forEach((s,i)=>{if(s.classList.contains('str'))stressed.push(i)});
+correct=q.answer.length===stressed.length&&q.answer.every(a=>stressed.includes(a));
+$$('.syl').forEach((s,i)=>{s.style.pointerEvents='none';if(q.answer.includes(i))s.classList.add('c-ok');else if(stressed.includes(i))s.classList.add('c-no')});break; }
+case 'rhyme-assign':{ let letters=[];q.verses.forEach((v,i)=>{let sel=$(`#rl${i}`);letters.push(sel?sel.value:'')});correct=letters.join('')===q.answer;break; }
+case 'order':{ let items=[...$('#orderList').children].map(c=>c.dataset.val);correct=items.every((v,i)=>v===q.items[i]);break; }
+case 'match':return;default:correct=false}
+curAttempts++;
+if(q.type==='free'&&q.selfCheck){showSelfCheck(q);return}
+if(correct){P.stars=(P.stars||0)+1;recordAnswer(curTopic,q.id||curQIdx,true,curHints);showFB(true,q.explanation||'Richtig! 🎉');if(Math.random()>.6)fireConfetti()}
+else if(curAttempts>=3){recordAnswer(curTopic,q.id||curQIdx,false,curHints);showFB(false,'📝 '+(q.solution||q.explanation||''),true)}
+else{curHints++;showHint()}}
+/*FEEDBACK*/
+function showHint(){let q=curQ;let fb=$('#qFeedback');if(!fb)return;
+let hints=q.hints||['Noch nicht ganz. Versuch es noch einmal!','Lies die Frage noch einmal genau durch.'];
+let h=curAttempts<=1?hints[0]:(hints[1]||hints[0]);
+fb.innerHTML=`<div class="fb fb-hint">💡 ${h}</div>`}
+function showFB(ok,msg,isSolution){
+let fb=$('#qFeedback');let act=$('#qActions');if(!fb)return;
+if(ok){fb.innerHTML=`<div class="fb fb-ok">✅ ${msg}</div>`;if(act)act.innerHTML=`<button class="btn btn-ok" onclick="nextQ()">Weiter →</button>`}
+else if(isSolution){fb.innerHTML=`<div class="fb fb-sol">${msg}</div>`;if(act)act.innerHTML=`<button class="btn btn-w" onclick="nextQ()">Verstanden, weiter →</button>`}
+else{fb.innerHTML=`<div class="fb fb-no">❌ ${msg}</div>`}}
+function showSelfCheck(q){
+let fb=$('#qFeedback');let act=$('#qActions');
+let h=`<div class="sc-card"><h4>📝 Musterlösung</h4><p>${q.modelAnswer}</p><hr style="margin:10px 0;border-color:#E0D8F0"><h4>Prüfe deine Antwort:</h4><ul class="cklist">`;
+(q.checklist||['Habe ich das richtige Stilmittel erkannt?','Kann ich erklären, warum?','Passt mein Beispiel zur Aufgabe?']).forEach(c=>{h+=`<li><input type="checkbox"><span>${c}</span></li>`});
+h+=`</ul></div>`;fb.innerHTML=h;
+recordAnswer(curTopic,q.id||curQIdx,true,0);P.stars=(P.stars||0)+1;saveP();
+if(act)act.innerHTML=`<button class="btn btn-ok" onclick="nextQ()">Weiter →</button>`}
+function nextQ(){curQIdx++;mcSel=-1;tfSel=null;matchSel=null;matchPairs=[];showQuestion()}
+function showResults(){
+let total=curQs.length;let tp=getTP(curTopic);let pct=getPct(curTopic);
+let h=`<div class="card" style="text-align:center;animation:fadeIn .4s"><h2>🎉 Geschafft!</h2>`;
+h+=`<div style="font-size:2.5em;font-weight:800;margin:12px 0;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent">${pct}%</div>`;
+h+=`<p>Du hast bisher ${tp.correct} von ${tp.total} Fragen richtig beantwortet.</p>`;
+h+=`<div class="pbar" style="margin:14px auto;max-width:300px"><div class="pfill" style="width:${pct}%"></div></div>`;
+if(pct>=80)h+=`<p style="color:var(--ok);font-weight:700">🌟 Sehr gut! Du kennst dich richtig gut aus!</p>`;
+else if(pct>=50)h+=`<p style="color:var(--s);font-weight:700">👍 Gut! Übe weiter, dann wird es noch besser!</p>`;
+else h+=`<p style="color:var(--err);font-weight:700">💪 Schau dir die Erklärung noch einmal an und versuche es erneut.</p>`;
+h+=`<div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button class="btn btn-p" onclick="renderTopic('${curTopic}',${curLevel})">🔄 Nochmal üben</button><button class="btn btn-o" onclick="renderTopic('${curTopic}',0)">📖 Theorie</button><button class="btn btn-g" onclick="nav('home')">🏠 Start</button></div></div>`;
+M.innerHTML=h;if(pct>=70)fireConfetti();saveP()}
+function shuffle(arr){let a=[...arr];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+/*THEORY*/
+function getTheory(tid){
+let T={};
+T.grund=`<div class="tc"><h3>📚 Was ist ein Gedicht?</h3><p>Ein <b>Gedicht</b> ist ein Text mit besonderer Form – in <b>Verse</b> und <b>Strophen</b> gegliedert.</p></div>
+<div class="tc"><h3>Vers</h3><p>Ein <b>Vers</b> ist <b>eine einzelne Zeile</b> eines Gedichts.</p><div class="ex">Die Sonne scheint so warm und hell ← Das ist ein Vers!</div></div>
+<div class="tc"><h3>Strophe</h3><p>Eine <b>Strophe</b> ist ein <b>Abschnitt</b> aus mehreren Versen. Strophen werden durch eine <b>Leerzeile</b> getrennt.</p></div>
+<div class="tc"><h3>Reim</h3><p>Wörter <b>reimen sich</b>, wenn sie ab dem letzten betonten Vokal <b>gleich oder ähnlich klingen</b>.</p><div class="ex">hell – schnell ✓ | Haus – Maus ✓</div></div>
+<div class="tc"><h3>Endreim & Binnenreim</h3><p><b>Endreim:</b> Reimwörter stehen am <b>Ende</b> der Verse.<br><b>Binnenreim:</b> Reimwörter stehen <b>innerhalb</b> eines Verses.</p>
+<div class="ex">Binnenreim: „Der Wind <b>singt</b> und <b>klingt</b> im Wald."</div></div>`;
+T.reim=`<div class="tc"><h3>🎵 Reimschema bestimmen</h3><p>Ein <b>Reimschema</b> zeigt, welche Verse sich reimen. Nutze Kleinbuchstaben: a, b, c …</p>
+<ol style="margin:8px 0 8px 20px"><li>Finde die letzten Wörter jedes Verses.</li><li>Prüfe, welche sich reimen.</li><li>Gib dem ersten Vers den Buchstaben <b>a</b>.</li><li>Verse die sich auf a reimen, bekommen auch <b>a</b>. Neuer Reim → <b>b</b>.</li></ol></div>
+<div class="tc"><h3>Paarreim (aabb)</h3><p>Vers 1 reimt auf Vers 2, Vers 3 auf Vers 4.</p><div class="merk">📌 „Paare stehen zusammen."</div></div>
+<div class="tc"><h3>Kreuzreim (abab)</h3><p>Vers 1 reimt auf Vers 3, Vers 2 auf Vers 4.</p><div class="merk">📌 „Die Reime kreuzen sich."</div></div>
+<div class="tc"><h3>Umarmender Reim (abba)</h3><p>Vers 1 reimt auf Vers 4, Vers 2 auf Vers 3.</p><div class="merk">📌 „Die a-Verse umarmen die b-Verse."</div></div>`;
+/*THEORY2*/
+T.metrum=`<div class="tc"><h3>👏 Metrum – Der Rhythmus</h3><p>In Gedichten wechseln sich <b>betonte</b> und <b>unbetonte Silben</b> regelmäßig ab. Dieses Muster heißt <b>Metrum</b> (oder <b>Versmaß</b>).</p>
+<p>• <b>Silbe</b> = Sprech-Baustein (Son-ne = 2 Silben)<br>• <b>betonte Silbe = Hebung</b> (stärker gesprochen)<br>• <b>unbetonte Silbe = Senkung</b> (schwächer gesprochen)</p>
+<div class="merk">📌 So bestimmst du das Metrum:<br>1. Lies den Vers laut.<br>2. Teile in Silben.<br>3. Klatsche bei betonten Silben.<br>4. Schreibe x für jede Silbe, x́ für betonte.</div></div>`;
+T.bilder=`<div class="tc"><h3>🎨 Sprachliche Bilder – Überblick</h3><p>Dichter nutzen besondere Mittel, um Bilder im Kopf zu erzeugen:</p>
+<p>1. <b>Vergleich</b> – mit „wie" oder „als" verglichen<br>2. <b>Personifikation</b> – Nichtmenschliches handelt menschlich<br>3. <b>Metapher</b> – ein Wort wird bildlich verwendet</p></div>`;
+T.vergleich=`<div class="tc"><h3>🔍 Der Vergleich</h3><p>Bei einem <b>Vergleich</b> werden zwei Dinge verglichen, weil sie etwas <b>gemeinsam</b> haben.</p>
+<p><b>Signalwörter:</b> wie, als, als ob</p>
+<div class="ex">„Der Schnee funkelt <b>wie</b> Kristall."<br>→ Verglichen: Schnee ↔ Kristall<br>→ Gemeinsamkeit: Beide funkeln.</div>
+<div class="merk">📌 „Die Formulierung ‚…' ist ein Vergleich, weil … mit … durch ‚wie/als' verbunden wird."</div></div>`;
+T.person=`<div class="tc"><h3>🌳 Die Personifikation</h3><p>Etwas <b>Nichtmenschliches</b> bekommt <b>menschliche Eigenschaften oder Handlungen</b>.</p>
+<div class="ex">„Der Wind <b>klopft</b> an die Tür." → Klopfen ist menschlich!<br>„Die Sonne <b>lacht</b>." → Lachen ist menschlich!</div>
+<p><b>Frage dich:</b> Kann das wirklich nur ein Mensch tun?</p>
+<div class="merk">📌 „… ist eine Personifikation, weil … die menschliche Handlung ‚…' erhält."</div></div>`;
+T.metapher=`<div class="tc"><h3>💡 Die Metapher</h3><p>Ein Wort wird <b>nicht wörtlich</b>, sondern <b>bildlich/übertragen</b> verwendet.</p>
+<div class="ex">„<b>Blättermeer</b>" → Meer = Wasserfläche → übertragen: viele Blätter wie ein Meer<br>Weitere: Gedankenblitz, Wortsalat, Lichtermeer</div>
+<div class="merk">📌 „Die Metapher ‚…' überträgt das Bild von … auf … . Dadurch stellt man sich … vor."</div></div>`;
+T.mixed=`<div class="tc"><h3>🧩 Entscheidungsbaum</h3>
+<div class="fb fb-info" style="margin:4px 0">Frage 1: Gibt es „wie", „als", „als ob"? → Ja? → oft <b>Vergleich</b></div>
+<div class="fb fb-info" style="margin:4px 0">Frage 2: Tut Nichtmenschliches etwas Menschliches? → Ja? → <b>Personifikation</b></div>
+<div class="fb fb-info" style="margin:4px 0">Frage 3: Wird ein Wort bildlich verwendet? → Ja? → <b>Metapher</b></div></div>`;
+T.pruef=`<div class="tc"><h3>🎯 Prüfungstraining</h3><p>Hier übst du alles gemischt – wie im echten Test!</p></div>`;
+T.exam='<div class="tc"><h3>🏆 Abschlussprüfung</h3><p>Teste dein gesamtes Wissen!</p></div>';
+return T[tid]||'<div class="card"><p>Wähle ein Level oben aus.</p></div>'}
+/*QUESTIONS*/
+function getQuestions(tid,level){
+let all=QBank[tid]||[];
+if(level<=1)return all.filter(q=>q.lv<=2);
+if(level===2)return all.filter(q=>q.lv>=2&&q.lv<=3);
+if(level===3)return all.filter(q=>q.lv>=3&&q.lv<=4);
+if(level===4)return all.filter(q=>q.lv>=4&&q.lv<=5);
+if(level===5)return all;return all}
+const QBank={};
+QBank.grund=[
+{id:'g1',lv:1,type:'mc',q:'Was ist ein Vers?',options:['Eine einzelne Zeile eines Gedichts','Ein Abschnitt aus mehreren Zeilen','Das gesamte Gedicht','Ein Reimwort'],answer:0,explanation:'Ein Vers ist eine einzelne Zeile eines Gedichts.'},
+{id:'g2',lv:1,type:'mc',q:'Was ist eine Strophe?',options:['Ein einzelnes Wort','Eine Zeile','Ein Abschnitt aus mehreren Versen','Der Titel'],answer:2,explanation:'Eine Strophe besteht aus mehreren Versen.'},
+{id:'g3',lv:1,type:'mc',q:'Wann reimen sich zwei Wörter?',options:['Wenn sie gleich lang sind','Wenn sie gleich anfangen','Wenn sie ab dem letzten betonten Vokal ähnlich klingen','Wenn sie gleich bedeuten'],answer:2,explanation:'Wörter reimen sich, wenn sie ab dem letzten betonten Vokal gleich oder ähnlich klingen.'},
+{id:'g4',lv:1,type:'tf',q:'Beim Endreim stehen die Reimwörter am Ende der Verse.',answer:true,explanation:'Richtig! Genau das ist ein Endreim.'},
+{id:'g5',lv:1,type:'tf',q:'Beim Binnenreim stehen die Reimwörter am Ende verschiedener Verse.',answer:false,explanation:'Nein! Beim Binnenreim reimen sich Wörter innerhalb desselben Verses.'},
+{id:'g6',lv:2,type:'mc',q:'Wie viele Verse hat diese Strophe?',poem:'Der Herbst ist da,\ndie Blätter bunt,\nder Wind weht kalt,\nes wird so rund.',options:['2','3','4','5'],answer:2,explanation:'4 Verse – jede Zeile ist ein Vers!'},
+{id:'g7',lv:2,type:'fill',q:'Eine einzelne Zeile eines Gedichts nennt man einen ___.',answer:['Vers','vers'],explanation:'Eine Zeile = ein Vers.'},
+{id:'g8',lv:2,type:'fill',q:'Mehrere Verse bilden eine ___.',answer:['Strophe','strophe'],explanation:'Mehrere Verse = eine Strophe.'},
+{id:'g9',lv:2,type:'mc',q:'Was ist ein Binnenreim?',options:['Reimwörter am Ende verschiedener Verse','Reimwörter innerhalb eines Verses','Reim ohne Reimwörter'],answer:1,explanation:'Binnenreim = Reim innerhalb derselben Zeile.'},
+{id:'g10',lv:2,type:'tf',q:'„Der Wind singt und klingt im Wald" enthält einen Binnenreim.',answer:true,explanation:'„singt" und „klingt" reimen sich in derselben Zeile!'},
+{id:'g11',lv:3,type:'mc',q:'Welches Wortpaar reimt sich?',options:['Baum – Haus','Nacht – Macht','Sonne – Regen','Blume – Garten'],answer:1,explanation:'„Nacht" und „Macht" reimen sich (-acht).'},
+{id:'g12',lv:3,type:'mc',q:'Welcher Reimtyp liegt hier vor?',poem:'Es tanzt und glänzt der Morgentau.',options:['Endreim','Binnenreim','Kein Reim'],answer:1,explanation:'„tanzt" und „glänzt" – Reim innerhalb einer Zeile = Binnenreim!'},
+{id:'g13',lv:3,type:'mc',q:'Wie viele Strophen hat dieses Gedicht?',poem:'Der Herbst ist da,\ndie Blätter bunt.\n\nDer Wind weht kalt,\nes wird so rund.',options:['1','2','4'],answer:1,explanation:'2 Strophen – die Leerzeile trennt sie.'},
+{id:'g14',lv:1,type:'mc',q:'Wie werden Strophen getrennt?',options:['Durch einen Punkt','Durch eine Leerzeile','Durch ein Komma'],answer:1,explanation:'Strophen werden durch eine Leerzeile getrennt.'},
+{id:'g15',lv:2,type:'match',q:'Ordne die Begriffe zu:',left:['Vers','Strophe','Reim','Endreim'],right:['Einzelne Zeile','Abschnitt aus Versen','Gleicher Klang','Reim am Versende'],pairs:{0:0,1:1,2:2,3:3}},
+{id:'g16',lv:4,type:'free',q:'Erkläre den Unterschied zwischen Vers und Strophe.',keywords:['vers','zeile','strophe','mehrere'],minKeywords:3,selfCheck:true,modelAnswer:'Ein Vers ist eine Zeile. Eine Strophe besteht aus mehreren Versen.'},
+{id:'g17',lv:4,type:'free',q:'Erkläre den Unterschied zwischen Endreim und Binnenreim.',keywords:['endreim','ende','binnenreim','innerhalb'],minKeywords:2,selfCheck:true,modelAnswer:'Beim Endreim stehen Reimwörter am Ende der Verse. Beim Binnenreim innerhalb eines Verses.'},
+{id:'g18',lv:5,type:'free',q:'Schreibe zwei Verse mit Endreim.',selfCheck:true,modelAnswer:'Beispiel: „Die Sonne scheint so hell / der Bach fließt klar und schnell."'},
+{id:'g19',lv:5,type:'free',q:'Schreibe einen Vers mit Binnenreim.',selfCheck:true,modelAnswer:'Beispiel: „Der Wind singt und klingt im Wald."'},
+{id:'g20',lv:3,type:'tf',q:'„Haus" und „Maus" sind ein Beispiel für einen Reim.',answer:true,explanation:'Ja! „Haus" und „Maus" klingen ab „-aus" gleich.'}
+];
+/*REIM_QUESTIONS*/
+QBank.reim=[
+{id:'r1',lv:1,type:'mc',q:'Was zeigt ein Reimschema?',options:['Die Anzahl der Wörter','Welche Verse sich reimen','Die Länge des Gedichts'],answer:1,explanation:'Ein Reimschema zeigt, welche Verse sich reimen.'},
+{id:'r2',lv:1,type:'mc',q:'Welches Reimschema hat der Paarreim?',options:['abab','aabb','abba'],answer:1,explanation:'Paarreim = aabb. Paare stehen zusammen!'},
+{id:'r3',lv:1,type:'mc',q:'Welches Reimschema hat der Kreuzreim?',options:['aabb','abab','abba'],answer:1,explanation:'Kreuzreim = abab. Die Reime kreuzen sich!'},
+{id:'r4',lv:1,type:'mc',q:'Welches Reimschema hat der umarmende Reim?',options:['aabb','abab','abba'],answer:2,explanation:'Umarmender Reim = abba. Die a-Verse umarmen die b-Verse!'},
+{id:'r5',lv:1,type:'tf',q:'Beim Paarreim reimt sich Vers 1 auf Vers 3.',answer:false,explanation:'Nein! Beim Paarreim reimt sich Vers 1 auf Vers 2.'},
+{id:'r6',lv:1,type:'tf',q:'Beim Kreuzreim reimt sich Vers 1 auf Vers 3.',answer:true,explanation:'Richtig! Kreuzreim: Vers 1↔3 und Vers 2↔4.'},
+{id:'r7',lv:2,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Die Sonne scheint so hell','der Bach fließt klar und schnell','Die Vögel singen froh','im weichen, warmen Stroh'],answer:'aabb',explanation:'Paarreim! hell-schnell (a), froh-Stroh (b) → aabb'},
+{id:'r8',lv:2,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Die Blätter fallen sacht','der Wind weht durch das Feld','es kommt die dunkle Nacht','die Sterne stehn am Zelt'],answer:'abab',explanation:'Kreuzreim! sacht-Nacht (a), Feld-Zelt (b) → abab'},
+{id:'r9',lv:2,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Der Mond steht hoch im Licht','die Wolken ziehen weit','der Abend bringt die Zeit','ein Stern am Himmel bricht'],answer:'abba',explanation:'Umarmender Reim! Licht-bricht (a), weit-Zeit (b) → abba'},
+{id:'r10',lv:2,type:'mc',q:'Welches Reimschema liegt hier vor?',poem:'Im Garten blüht es fein, (a)\ndie Bienen summen leis, (b)\nim Sonnenschein so heiß, (b)\ndie Blumen groß und klein. (a)',options:['Paarreim','Kreuzreim','Umarmender Reim'],answer:2,explanation:'abba = Umarmender Reim! fein-klein (a) umarmen leis-heiß (b).'},
+{id:'r11',lv:3,type:'mc',q:'Wie heißt das Reimschema aabb?',options:['Kreuzreim','Umarmender Reim','Paarreim'],answer:2,explanation:'aabb = Paarreim!'},
+{id:'r12',lv:3,type:'mc',q:'Wie heißt das Reimschema abba?',options:['Paarreim','Kreuzreim','Umarmender Reim'],answer:2,explanation:'abba = Umarmender Reim!'},
+{id:'r13',lv:2,type:'fill',q:'Das Reimschema abab heißt ___.',answer:['Kreuzreim','kreuzreim'],explanation:'abab = Kreuzreim!'},
+{id:'r14',lv:3,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Der Schnee fällt leis und sacht','die Welt wird weiß und still','ich schau aus meinem Fensterbrill','bis in die tiefe Nacht'],answer:'abba',explanation:'sacht-Nacht (a), still-Fensterbrill (b) → abba = Umarmender Reim'},
+{id:'r15',lv:3,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Im Frühling blühen Blumen bunt','der Schmetterling fliegt hin','die Wiese duftet frisch und grün','der Vogel singt zur Morgenstund'],answer:'abba',explanation:'bunt-Morgenstund (a), hin-grün (b) → abba'},
+{id:'r16',lv:2,type:'mc',q:'Welches Reimschema hat diese Strophe?',poem:'Der Regen fällt herab (a)\nauf Dächer, Straß und Stein (b)\nder Himmel grau und fein (b)\nein Tropfen wie ein Grab (a)',options:['Paarreim (aabb)','Kreuzreim (abab)','Umarmender Reim (abba)'],answer:2,explanation:'abba = Umarmender Reim!'},
+{id:'r17',lv:3,type:'fill',q:'Beim Paarreim reimt sich Vers 1 auf Vers ___.',answer:['2'],explanation:'Paarreim: Vers 1↔2, Vers 3↔4.'},
+{id:'r18',lv:3,type:'fill',q:'Beim Kreuzreim reimt sich Vers 2 auf Vers ___.',answer:['4'],explanation:'Kreuzreim: Vers 1↔3, Vers 2↔4.'},
+{id:'r19',lv:4,type:'free',q:'Erkläre, warum diese Strophe einen Paarreim hat:',poem:'Die Katze schleicht ganz leis\num einen großen Kreis\nSie jagt nach einer Maus\nund läuft dann schnell nach Haus',keywords:['paarreim','aabb','leis','kreis','maus','haus','vers 1','vers 2'],minKeywords:3,selfCheck:true,modelAnswer:'Es ist ein Paarreim (aabb), weil sich „leis" und „Kreis" (Vers 1+2) und „Maus" und „Haus" (Vers 3+4) reimen.'},
+{id:'r20',lv:5,type:'free',q:'Schreibe eine Strophe mit 4 Versen im Paarreim (aabb).',selfCheck:true,modelAnswer:'Beispiel: „Die Sonne scheint so hell / der Bach fließt klar und schnell / Die Vögel singen froh / im weichen warmen Stroh"'}
+];
+/*REIM_QUESTIONS2*/
+QBank.reim.push(
+{id:'r21',lv:2,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Am Morgen singt der Hahn','die Kinder gehn zur Schule','sie setzen sich zum Stuhle','da fängt der Tag erst an'],answer:'abba',explanation:'Hahn-an (a), Schule-Stuhle (b) → abba'},
+{id:'r22',lv:3,type:'mc',q:'Welcher Merksatz passt zum Kreuzreim?',options:['"Paare stehen zusammen."','"Die Reime kreuzen sich."','"Die a-Verse umarmen die b-Verse."'],answer:1,explanation:'"Die Reime kreuzen sich" – weil sich die Reimpaare überkreuzen (abab).'},
+{id:'r23',lv:2,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Ein Vogel sitzt im Baum','und singt ein schönes Lied','weil er den Frühling sieht','er lebt in seinem Traum'],answer:'abba',explanation:'Baum-Traum (a), Lied-sieht (b) → abba'},
+{id:'r24',lv:3,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Die Schule ist bald aus','dann lauf ich schnell nach Haus','im Garten spiel ich Ball','im Sommer überall'],answer:'aabb',explanation:'aus-Haus (a), Ball-überall (b) → aabb = Paarreim'},
+{id:'r25',lv:3,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Im Winter ist es kalt','der See friert langsam zu','die Bäume stehn im Wald','die Welt kommt dann zur Ruh'],answer:'abab',explanation:'kalt-Wald (a), zu-Ruh (b) → abab = Kreuzreim'},
+{id:'r26',lv:4,type:'free',q:'Erkläre mit eigenen Worten, was ein Kreuzreim ist. Gib ein Beispiel.',keywords:['kreuzreim','abab','vers 1','vers 3','kreuzen'],minKeywords:2,selfCheck:true,modelAnswer:'Beim Kreuzreim (abab) reimt sich Vers 1 auf Vers 3 und Vers 2 auf Vers 4. Die Reime kreuzen sich.'},
+{id:'r27',lv:4,type:'mc',q:'Tom sagt: „abba ist ein Paarreim." Hat er recht?',options:['Ja, Tom hat recht.','Nein, abba ist ein Kreuzreim.','Nein, abba ist ein umarmender Reim.'],answer:2,explanation:'Tom irrt sich! abba = umarmender Reim, nicht Paarreim (aabb).'},
+{id:'r28',lv:4,type:'mc',q:'Lisa sagt: „Beim Kreuzreim reimt sich Vers 1 auf Vers 2." Stimmt das?',options:['Ja, das stimmt.','Nein, Vers 1 reimt auf Vers 3.','Nein, Vers 1 reimt auf Vers 4.'],answer:1,explanation:'Kreuzreim (abab): Vers 1↔3, Vers 2↔4. Lisa verwechselt es mit dem Paarreim!'},
+{id:'r29',lv:5,type:'free',q:'Schreibe eine Strophe im Kreuzreim (abab).',selfCheck:true,modelAnswer:'Beispiel: „Die Blätter fallen sacht / der Wind weht durch das Feld / es kommt die dunkle Nacht / die Sterne stehn am Zelt"'},
+{id:'r30',lv:5,type:'free',q:'Schreibe eine Strophe im umarmenden Reim (abba).',selfCheck:true,modelAnswer:'Beispiel: „Der Mond steht hoch im Licht / die Wolken ziehen weit / der Abend bringt die Zeit / ein Stern am Himmel bricht"'},
+{id:'r31',lv:1,type:'match',q:'Ordne die Reimschemata den Namen zu:',left:['aabb','abab','abba'],right:['Paarreim','Kreuzreim','Umarmender Reim'],pairs:{0:0,1:1,2:2}},
+{id:'r32',lv:3,type:'tf',q:'Beim umarmenden Reim reimt sich Vers 2 auf Vers 3.',answer:true,explanation:'Richtig! abba: Die inneren Verse (2+3) reimen sich, die äußeren (1+4) auch.'},
+{id:'r33',lv:2,type:'mc',q:'Welches Reimschema hat diese Strophe?',poem:'Der Frosch sitzt still am Teich\ner wartet auf sein Glück\nein Käfer kommt zurück\ndie Welt wird warm und weich',options:['Paarreim','Kreuzreim','Umarmender Reim'],answer:2,explanation:'Teich-weich (a), Glück-zurück (b) → abba'},
+{id:'r34',lv:3,type:'mc',q:'Welches Reimschema hat diese Strophe?',poem:'Die Nacht bricht langsam an\nder Mond scheint hell und klar\ndie Sterne wunderbar\nder Schlaf kommt irgendwann',options:['Paarreim','Kreuzreim','Umarmender Reim'],answer:2,explanation:'an-irgendwann (a), klar-wunderbar (b) → abba'},
+{id:'r35',lv:2,type:'rhyme-assign',q:'Bestimme das Reimschema:',verses:['Am Strand die Wellen rauschen','die Möwen schreien laut','ich mag den Wellen lauschen','weil mir der Tag vertraut'],answer:'abab',explanation:'rauschen-lauschen (a), laut-vertraut (b) → abab = Kreuzreim'}
+);
+/*METRUM_QUESTIONS*/
+QBank.metrum=[
+{id:'m1',lv:1,type:'mc',q:'Was ist eine Silbe?',options:['Ein ganzes Wort','Ein Sprech-Baustein eines Wortes','Ein Satzzeichen'],answer:1,explanation:'Eine Silbe ist ein Sprech-Baustein. „Son-ne" hat 2 Silben.'},
+{id:'m2',lv:1,type:'mc',q:'Was ist eine Hebung?',options:['Eine unbetonte Silbe','Eine betonte Silbe','Ein Reimwort'],answer:1,explanation:'Hebung = betonte Silbe (die stärker gesprochen wird).'},
+{id:'m3',lv:1,type:'mc',q:'Was ist eine Senkung?',options:['Eine betonte Silbe','Eine unbetonte Silbe','Ein Vers'],answer:1,explanation:'Senkung = unbetonte Silbe (die schwächer gesprochen wird).'},
+{id:'m4',lv:1,type:'mc',q:'Was ist das Metrum?',options:['Die Anzahl der Verse','Das regelmäßige Betonungsmuster','Das Reimschema'],answer:1,explanation:'Das Metrum ist das regelmäßige Muster aus betonten und unbetonten Silben.'},
+{id:'m5',lv:1,type:'tf',q:'Metrum und Versmaß bedeuten dasselbe.',answer:true,explanation:'Richtig! Metrum = Versmaß.'},
+{id:'m6',lv:1,type:'match',q:'Ordne die Begriffe zu:',left:['Hebung','Senkung','Metrum'],right:['betonte Silbe','unbetonte Silbe','Betonungsmuster'],pairs:{0:0,1:1,2:2}},
+{id:'m7',lv:2,type:'mc',q:'Wie viele Silben hat das Wort „Schmet-ter-ling"?',options:['2','3','4'],answer:1,explanation:'Schmet-ter-ling = 3 Silben.'},
+{id:'m8',lv:2,type:'mc',q:'Wie viele Silben hat „Ge-dicht"?',options:['1','2','3'],answer:1,explanation:'Ge-dicht = 2 Silben.'},
+{id:'m9',lv:2,type:'syllable',q:'Markiere die betonten Silben (klicke darauf):',instruction:'Vers: „Die Sonne scheint so hell"',syllables:['Die','Son','ne','scheint','so','hell'],answer:[1,3,5],explanation:'Die SÓN-ne SCHEINT so HÉLL → unbetont-betont-unbetont-betont-unbetont-betont'},
+{id:'m10',lv:2,type:'syllable',q:'Markiere die betonten Silben:',instruction:'Vers: „Der Wind weht kalt und stark"',syllables:['Der','Wind','weht','kalt','und','stark'],answer:[1,3,5],explanation:'Der WÍND weht KÁLT und STÁRK'},
+{id:'m11',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Im Wald da steht ein Haus"',syllables:['Im','Wald','da','steht','ein','Haus'],answer:[1,3,5],explanation:'Im WÁLD da STÉHT ein HÁUS'},
+{id:'m12',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Die Blumen blühen bunt"',syllables:['Die','Blu','men','blü','hen','bunt'],answer:[1,3,5],explanation:'Die BLÚ-men BLÜ-hen BÚNT'},
+{id:'m13',lv:2,type:'mc',q:'Welche Silbe ist in „Sónne" betont?',options:['Son (die erste)','ne (die zweite)'],answer:0,explanation:'In „Sonne" ist die erste Silbe betont: SÓN-ne.'},
+{id:'m14',lv:3,type:'mc',q:'Was passiert zuerst, wenn du das Metrum bestimmen willst?',options:['Das Reimschema aufschreiben','Den Vers laut lesen und in Silben teilen','Die Überschrift lesen'],answer:1,explanation:'Zuerst liest du den Vers laut und teilst ihn in Silben!'},
+{id:'m15',lv:2,type:'tf',q:'In „Gedicht" ist die zweite Silbe betont: Ge-DÍCHT.',answer:true,explanation:'Richtig! Ge-DÍCHT – die zweite Silbe ist betont.'},
+{id:'m16',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Es reg-net leis und sacht"',syllables:['Es','reg','net','leis','und','sacht'],answer:[1,3,5],explanation:'Es RÉG-net LÉIS und SÁCHT'},
+{id:'m17',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Der A-bend kommt so still"',syllables:['Der','A','bend','kommt','so','still'],answer:[1,3,5],explanation:'Der Á-bend KÓMMT so STÍLL'},
+{id:'m18',lv:4,type:'free',q:'Erkläre mit eigenen Worten: Was ist der Unterschied zwischen Hebung und Senkung?',keywords:['hebung','betont','senkung','unbetont'],minKeywords:3,selfCheck:true,modelAnswer:'Eine Hebung ist eine betonte Silbe – sie wird stärker gesprochen. Eine Senkung ist eine unbetonte Silbe – sie wird schwächer gesprochen.'},
+{id:'m19',lv:4,type:'free',q:'Erkläre: Wie bestimmt man das Metrum eines Verses?',keywords:['laut','silben','betont','klatsch'],minKeywords:2,selfCheck:true,modelAnswer:'Man liest den Vers laut, teilt ihn in Silben und prüft, welche Silben betont sind (Hebung) und welche unbetont (Senkung).'},
+{id:'m20',lv:2,type:'fill',q:'Eine betonte Silbe nennt man auch ___.',answer:['Hebung','hebung'],explanation:'Betonte Silbe = Hebung.'},
+{id:'m21',lv:2,type:'fill',q:'Eine unbetonte Silbe nennt man auch ___.',answer:['Senkung','senkung'],explanation:'Unbetonte Silbe = Senkung.'},
+{id:'m22',lv:3,type:'mc',q:'Welches Muster zeigt: x x́ x x́ x x́ ?',options:['Nur betonte Silben','Abwechselnd unbetont-betont','Abwechselnd betont-unbetont'],answer:1,explanation:'x x́ x x́ x x́ = unbetont-betont-unbetont-betont... (Jambus)'},
+{id:'m23',lv:1,type:'mc',q:'Was markiert man mit x́ (x mit Akzent)?',options:['Eine unbetonte Silbe','Eine betonte Silbe','Ein Reimwort'],answer:1,explanation:'x́ = betonte Silbe (Hebung). x ohne Akzent = unbetonte Silbe (Senkung).'},
+{id:'m24',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Ein Stern am Him-mel steht"',syllables:['Ein','Stern','am','Him','mel','steht'],answer:[1,3,5],explanation:'Ein STÉRN am HÍM-mel STÉHT'},
+{id:'m25',lv:5,type:'free',q:'Schreibe einen Vers mit abwechselnd unbetonten und betonten Silben.',selfCheck:true,modelAnswer:'Beispiel: „Die Sonne scheint so hell" (x x́ x x́ x x́)'}
+];
+/*VERGLEICH_QUESTIONS*/
+QBank.vergleich=[
+{id:'v1',lv:1,type:'mc',q:'Was ist ein Vergleich?',options:['Ein bildlicher Ausdruck ohne Signalwort','Zwei Dinge werden mit „wie" oder „als" verglichen','Etwas Nichtmenschliches handelt menschlich'],answer:1,explanation:'Beim Vergleich werden zwei Dinge mit „wie", „als" oder „als ob" verglichen.'},
+{id:'v2',lv:1,type:'mc',q:'Welche Signalwörter deuten auf einen Vergleich hin?',options:['und, oder, aber','wie, als, als ob','der, die, das'],answer:1,explanation:'Typische Signalwörter: wie, als, als ob.'},
+{id:'v3',lv:2,type:'mc',q:'Welches sprachliche Bild ist das?\n„Der Schnee funkelt wie Kristall."',options:['Vergleich','Personifikation','Metapher'],answer:0,explanation:'Vergleich! „wie" verbindet Schnee und Kristall.'},
+{id:'v4',lv:2,type:'mc',q:'Was ist das Vergleichswort in „schnell wie der Wind"?',options:['schnell','wie','Wind'],answer:1,explanation:'„wie" ist das Vergleichswort.'},
+{id:'v5',lv:2,type:'mc',q:'Was wird in „Die Sterne funkeln wie Diamanten" verglichen?',options:['Sterne und Mond','Sterne und Diamanten','Diamanten und Gold'],answer:1,explanation:'Sterne werden mit Diamanten verglichen – beide funkeln.'},
+{id:'v6',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Die Straße glänzt wie Silber."',options:['Metapher','Vergleich','Personifikation'],answer:1,explanation:'Vergleich! Das Signalwort „wie" verrät es.'},
+{id:'v7',lv:3,type:'mc',q:'Was haben die verglichenen Dinge in „Der Mond leuchtete wie eine Lampe" gemeinsam?',options:['Beide sind rund','Beide leuchten','Beide sind gelb'],answer:1,explanation:'Mond und Lampe haben gemeinsam, dass beide leuchten.'},
+{id:'v8',lv:2,type:'tf',q:'„Stark wie ein Löwe" ist ein Vergleich.',answer:true,explanation:'Ja! „wie" verbindet zwei Dinge → Vergleich.'},
+{id:'v9',lv:3,type:'fill',q:'Ergänze: „Der Schnee ist weiß wie ___." (Vergleichsbild)',answer:['Milch','milch','Zucker','zucker','Watte','watte'],explanation:'Passende Vergleichsbilder: Milch, Zucker, Watte – alles weiß!'},
+{id:'v10',lv:4,type:'free',q:'Erkläre, warum „Die Sterne funkeln wie Diamanten" ein Vergleich ist.',keywords:['vergleich','wie','sterne','diamanten','funkeln','gemeinsam'],minKeywords:3,selfCheck:true,modelAnswer:'Es ist ein Vergleich, weil Sterne mit Diamanten durch „wie" verbunden werden. Beide funkeln/glänzen.'},
+{id:'v11',lv:3,type:'mc',q:'Was ist KEIN Vergleich?',options:['"schnell wie der Blitz"','"Der Wind klopft an die Tür"','"kalt wie Eis"'],answer:1,explanation:'„Der Wind klopft" ist eine Personifikation, kein Vergleich!'},
+{id:'v12',lv:4,type:'mc',q:'Marie sagt: „Blättermeer ist ein Vergleich." Hat sie recht?',options:['Ja, das stimmt','Nein, es ist eine Metapher','Nein, es ist eine Personifikation'],answer:1,explanation:'Nein! „Blättermeer" hat kein Vergleichswort. Es ist eine Metapher.'},
+{id:'v13',lv:5,type:'free',q:'Erfinde einen eigenen Vergleich mit dem Signalwort „wie".',selfCheck:true,modelAnswer:'Beispiel: „Das Wasser glitzert wie tausend Sterne."'},
+{id:'v14',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Ihre Augen leuchteten wie Sterne."',options:['Vergleich','Metapher','Personifikation'],answer:0,explanation:'Vergleich! „wie" verbindet Augen und Sterne.'},
+{id:'v15',lv:3,type:'mc',q:'Welche Wirkung hat der Vergleich „Der See lag still wie ein Spiegel"?',options:['Man kann sich vorstellen, wie glatt und ruhig der See war','Es klingt lustig','Der See wird lebendig'],answer:0,explanation:'Durch den Vergleich mit einem Spiegel kann man sich die glatte, stille Oberfläche besser vorstellen.'},
+{id:'v16',lv:2,type:'highlight',q:'Klicke auf das Vergleichswort:',text:'Der Schnee funkelt wie Kristall',answer:['wie'],explanation:'„wie" ist das Signalwort des Vergleichs.'},
+{id:'v17',lv:1,type:'tf',q:'Vergleiche haben immer ein Signalwort wie „wie", „als" oder „als ob".',answer:true,explanation:'Richtig! Das Signalwort ist das wichtigste Erkennungsmerkmal.'},
+{id:'v18',lv:3,type:'fill',q:'„Die Wolken sind weich wie ___." Ergänze ein Vergleichsbild.',answer:['Watte','watte','Kissen','kissen'],explanation:'Watte oder Kissen – beides ist weich!'},
+{id:'v19',lv:4,type:'free',q:'Erkläre die Wirkung des Vergleichs „Der Fluss schlängelt sich wie eine Schlange."',keywords:['vergleich','schlange','fluss','bewegung','vorstellen','kurven'],minKeywords:2,selfCheck:true,modelAnswer:'Durch den Vergleich mit einer Schlange kann man sich vorstellen, wie sich der Fluss in Kurven durch die Landschaft bewegt.'},
+{id:'v20',lv:5,type:'free',q:'Schreibe einen Satz mit einem Vergleich zum Thema Herbst.',selfCheck:true,modelAnswer:'Beispiel: „Die Blätter leuchten bunt wie ein Feuerwerk."'}
+];
+/*PERSON_QUESTIONS*/
+QBank.person=[
+{id:'p1',lv:1,type:'mc',q:'Was ist eine Personifikation?',options:['Ein Vergleich mit „wie"','Etwas Nichtmenschliches bekommt menschliche Eigenschaften','Ein bildlicher Ausdruck'],answer:1,explanation:'Bei einer Personifikation handelt etwas Nichtmenschliches wie ein Mensch.'},
+{id:'p2',lv:1,type:'tf',q:'„Die Sonne lacht" ist eine Personifikation.',answer:true,explanation:'Ja! Die Sonne kann nicht wirklich lachen – das ist menschlich.'},
+{id:'p3',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Der Wind klopft an die Tür."',options:['Vergleich','Metapher','Personifikation'],answer:2,explanation:'Personifikation! Der Wind kann nicht klopfen – das tun nur Menschen.'},
+{id:'p4',lv:2,type:'mc',q:'Was wird in „Der Herbst malt die Blätter bunt" personifiziert?',options:['Die Blätter','Der Herbst','Die Farbe'],answer:1,explanation:'Der Herbst wird personifiziert – er „malt" wie ein Mensch.'},
+{id:'p5',lv:2,type:'mc',q:'Welche menschliche Handlung hat der Herbst in „Der Herbst malt die Blätter bunt"?',options:['Er tanzt','Er malt','Er singt'],answer:1,explanation:'„malen" ist die menschliche Handlung.'},
+{id:'p6',lv:2,type:'tf',q:'„Die alte Tür stöhnt" ist eine Personifikation.',answer:true,explanation:'Ja! Eine Tür kann nicht stöhnen – das ist menschlich.'},
+{id:'p7',lv:3,type:'mc',q:'Was ist KEINE Personifikation?',options:['"Der Morgen reibt sich die Augen"','"Der Mond ist rund wie ein Ball"','"Der Wind flüstert durch die Bäume"'],answer:1,explanation:'„wie ein Ball" ist ein Vergleich (Signalwort „wie"), keine Personifikation.'},
+{id:'p8',lv:3,type:'mc',q:'Welche Wirkung hat „Die Sonne lacht"?',options:['Die Sonne wird lebendig und freundlich','Es klingt traurig','Es ist ein Vergleich'],answer:0,explanation:'Die Personifikation macht die Sonne lebendig und freundlich – man stellt sich einen fröhlichen Tag vor.'},
+{id:'p9',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Der Morgen reibt sich die Augen."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Der Morgen handelt wie ein Mensch, der aufwacht.'},
+{id:'p10',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Der Wind flüstert durch die Bäume."',options:['Vergleich','Metapher','Personifikation'],answer:2,explanation:'Personifikation! Wind kann nicht flüstern – das ist menschlich.'},
+{id:'p11',lv:4,type:'free',q:'Erkläre, warum „Der Wind klopft ans Fenster" eine Personifikation ist.',keywords:['personifikation','wind','klopft','menschlich','mensch'],minKeywords:3,selfCheck:true,modelAnswer:'Es ist eine Personifikation, weil der Wind die menschliche Handlung „klopfen" erhält. Nur Menschen klopfen normalerweise.'},
+{id:'p12',lv:4,type:'free',q:'Welche Wirkung hat die Personifikation „Die Sonne lacht vom Himmel"?',keywords:['lebendig','freundlich','vorstellen','fröhlich','warm'],minKeywords:2,selfCheck:true,modelAnswer:'Die Sonne wirkt lebendig und freundlich. Man stellt sich einen warmen, fröhlichen Tag vor.'},
+{id:'p13',lv:5,type:'free',q:'Erfinde einen Satz, in dem der Wind wie ein Mensch handelt (Personifikation).',selfCheck:true,modelAnswer:'Beispiel: „Der Wind singt ein leises Lied."'},
+{id:'p14',lv:5,type:'free',q:'Erfinde eine Personifikation mit der Nacht.',selfCheck:true,modelAnswer:'Beispiel: „Die Nacht breitet ihren dunklen Mantel über die Stadt."'},
+{id:'p15',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Die Blumen tanzen im Wind."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Blumen können nicht tanzen – das ist menschlich.'},
+{id:'p16',lv:2,type:'tf',q:'„Der Regen trommelt auf das Dach" ist eine Personifikation.',answer:true,explanation:'Ja! Trommeln ist eine menschliche Handlung.'},
+{id:'p17',lv:3,type:'mc',q:'Was wird in „Die Zeit rennt davon" personifiziert?',options:['Das Rennen','Die Zeit','Der Weg'],answer:1,explanation:'Die Zeit wird personifiziert – sie „rennt" wie ein Mensch.'},
+{id:'p18',lv:4,type:'mc',q:'Lea sagt: „Der Wind ist kalt wie Eis" ist eine Personifikation. Hat Lea recht?',options:['Ja, Lea hat recht.','Nein, es ist ein Vergleich.','Nein, es ist eine Metapher.'],answer:1,explanation:'Nein! „wie Eis" → Signalwort „wie" → Vergleich! Lea verwechselt es.'},
+{id:'p19',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Die Uhr tickt müde vor sich hin."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Eine Uhr kann nicht müde sein – das ist menschlich.'},
+{id:'p20',lv:2,type:'highlight',q:'Klicke auf das Wort, das die menschliche Handlung zeigt:',text:'Der Wind klopft an die Tür',answer:['klopft'],explanation:'„klopft" ist die menschliche Handlung – der Wind wird personifiziert.'}
+];
+/*METAPHER_QUESTIONS*/
+QBank.metapher=[
+{id:'mt1',lv:1,type:'mc',q:'Was ist eine Metapher?',options:['Ein Vergleich mit „wie"','Ein Wort wird bildlich (übertragen) verwendet','Etwas handelt menschlich'],answer:1,explanation:'Bei einer Metapher wird ein Wort nicht wörtlich, sondern bildlich verwendet.'},
+{id:'mt2',lv:1,type:'mc',q:'Was bedeutet „übertragener Sinn"?',options:['Das Wort wird wörtlich gemeint','Das Bild eines Wortes wird auf etwas anderes übertragen','Das Wort wird laut gesprochen'],answer:1,explanation:'Übertragen = das Bild wird auf etwas anderes angewendet.'},
+{id:'mt3',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Ein Lichtermeer füllt den Platz."',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! „Lichtermeer" wird bildlich verwendet – es ist kein echtes Meer.'},
+{id:'mt4',lv:2,type:'mc',q:'Was bedeutet „Blättermeer"?',options:['Ein Meer aus Wasser','Viele Blätter, die eine große Fläche bedecken','Ein einzelnes Blatt'],answer:1,explanation:'Blättermeer = viele Blätter, die aussehen wie ein Meer.'},
+{id:'mt5',lv:2,type:'mc',q:'Was bedeutet „Gedankenblitz"?',options:['Ein Blitz am Himmel','Ein plötzlicher, schneller Gedanke','Ein lautes Geräusch'],answer:1,explanation:'Gedankenblitz = ein plötzlicher Einfall – das Bild des Blitzes wird übertragen.'},
+{id:'mt6',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Ein Teppich aus Schnee bedeckt die Wiese."',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! Der Schnee wird als Teppich bezeichnet – bildliche Übertragung.'},
+{id:'mt7',lv:3,type:'mc',q:'Was wird bei „Wortsalat" übertragen?',options:['Das Bild eines Salats (Durcheinander) auf Wörter','Wörter werden gegessen','Salat wird beschrieben'],answer:0,explanation:'„Salat" = Durcheinander → viele durcheinander gewürfelte Wörter.'},
+{id:'mt8',lv:3,type:'mc',q:'Welches Wort ist eine Metapher?',options:['Sonnenschein','Blütenmeer','Regentropfen'],answer:1,explanation:'„Blütenmeer" – Blüten bilden kein echtes Meer, es ist bildlich gemeint.'},
+{id:'mt9',lv:2,type:'tf',q:'„Stimmengewitter" ist eine Metapher.',answer:true,explanation:'Ja! Die vielen lauten Stimmen werden bildlich als Gewitter beschrieben.'},
+{id:'mt10',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Eine Flut von Fragen kommt auf mich zu."',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! „Flut" wird bildlich verwendet – es sind keine echten Wassermassen.'},
+{id:'mt11',lv:4,type:'free',q:'Erkläre die Metapher „Blättermeer".',keywords:['blätter','meer','viele','fläche','übertragen','bildlich'],minKeywords:3,selfCheck:true,modelAnswer:'Die Metapher „Blättermeer" überträgt das Bild eines Meeres auf viele Blätter. Dadurch stellt man sich vor, wie die Blätter eine riesige Fläche bedecken.'},
+{id:'mt12',lv:4,type:'free',q:'Erkläre: Was bedeutet „ein Funken Hoffnung"?',keywords:['funken','hoffnung','klein','licht','übertragen','wenig'],minKeywords:2,selfCheck:true,modelAnswer:'Das Bild eines kleinen Funkens wird auf Hoffnung übertragen. Es bedeutet, dass nur noch ein kleines bisschen Hoffnung da ist.'},
+{id:'mt13',lv:5,type:'free',q:'Erfinde eine eigene Metapher und erkläre sie.',selfCheck:true,modelAnswer:'Beispiel: „Wissensschatz" – Das Bild eines Schatzes wird auf Wissen übertragen. Wissen ist wertvoll wie ein Schatz.'},
+{id:'mt14',lv:3,type:'mc',q:'Was ist der Unterschied zwischen Vergleich und Metapher?',options:['Kein Unterschied','Der Vergleich hat ein Signalwort wie „wie", die Metapher nicht','Die Metapher ist immer lustig'],answer:1,explanation:'Beim Vergleich gibt es „wie/als/als ob". Die Metapher überträgt direkt ohne Signalwort.'},
+{id:'mt15',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Wüstenmeer"',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! Die Wüste wird bildlich als Meer beschrieben – endlose Weite.'},
+{id:'mt16',lv:3,type:'tf',q:'„Er ist stark wie ein Bär" ist eine Metapher.',answer:false,explanation:'Nein! „wie" → Vergleich, nicht Metapher!'},
+{id:'mt17',lv:4,type:'mc',q:'Jan sagt: „Der Mond leuchtet wie eine Lampe" ist eine Metapher. Hat er recht?',options:['Ja, Jan hat recht.','Nein, es ist ein Vergleich.','Nein, es ist eine Personifikation.'],answer:1,explanation:'Nein! „wie eine Lampe" → Signalwort „wie" → Vergleich!'},
+{id:'mt18',lv:2,type:'fill',q:'Ergänze die Metapher-Erklärung: Die Metapher „Blättermeer" überträgt das Bild von ___ auf ___.',answer:['Meer','meer'],explanation:'Das Bild eines Meeres wird auf viele Blätter übertragen.'},
+{id:'mt19',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Schneewüste"',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! Schnee wird bildlich als Wüste (weite leere Fläche) beschrieben.'},
+{id:'mt20',lv:5,type:'free',q:'Erkläre die Metapher „Stimmengewitter" und ihre Wirkung.',selfCheck:true,modelAnswer:'Das Bild eines Gewitters wird auf viele Stimmen übertragen. Man stellt sich vor, dass viele Menschen gleichzeitig laut reden – es ist chaotisch und laut wie ein Gewitter.'}
+];
+/*BILDER_QUESTIONS*/
+QBank.bilder=QBank.vergleich.slice(0,7).concat(QBank.person.slice(0,7),QBank.metapher.slice(0,7));
+QBank.mixed=[
+{id:'x1',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Die Sterne funkeln wie Diamanten."',options:['Vergleich','Personifikation','Metapher'],answer:0,explanation:'Vergleich! „wie" ist das Signalwort.'},
+{id:'x2',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Der Morgen reibt sich die Augen."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Der Morgen handelt menschlich.'},
+{id:'x3',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Ein Lichtermeer füllt den Platz."',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! „Lichtermeer" ist bildlich gemeint.'},
+{id:'x4',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Der Wind klopft ans Fenster."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Der Wind handelt menschlich.'},
+{id:'x5',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Die Straße glänzt wie Silber."',options:['Vergleich','Personifikation','Metapher'],answer:0,explanation:'Vergleich! „wie" verrät es.'},
+{id:'x6',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Eine Flut von Fragen kommt auf mich zu."',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! „Flut" wird bildlich verwendet.'},
+{id:'x7',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Die Blumen tanzen im Wind."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Blumen tanzen wie Menschen.'},
+{id:'x8',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Der See lag still wie ein Spiegel."',options:['Vergleich','Personifikation','Metapher'],answer:0,explanation:'Vergleich! „wie ein Spiegel" ist das Vergleichsbild.'},
+{id:'x9',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Ein Teppich aus Schnee bedeckt den Garten."',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! „Teppich aus Schnee" ist bildlich.'},
+{id:'x10',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Die Sonne lacht vom Himmel."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Die Sonne kann nicht lachen.'},
+{id:'x11',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Er ist schnell wie der Blitz."',options:['Vergleich','Personifikation','Metapher'],answer:0,explanation:'Vergleich! „wie der Blitz" mit Signalwort.'},
+{id:'x12',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Stimmengewitter"',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! Gewitter wird auf Stimmen übertragen.'},
+{id:'x13',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Der Regen trommelt aufs Dach."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Regen kann nicht trommeln.'},
+{id:'x14',lv:3,type:'mc',q:'Welches sprachliche Bild?\n„Ihre Stimme klingt wie Musik."',options:['Vergleich','Personifikation','Metapher'],answer:0,explanation:'Vergleich! „wie Musik" mit Signalwort.'},
+{id:'x15',lv:4,type:'mc',q:'Max sagt: „Der Wind singt" ist ein Vergleich. Stimmt das?',options:['Ja','Nein, es ist eine Personifikation','Nein, es ist eine Metapher'],answer:1,explanation:'Nein! Es gibt kein „wie/als". Der Wind handelt menschlich → Personifikation.'},
+{id:'x16',lv:4,type:'mc',q:'Anna sagt: „Gedankenblitz ist eine Personifikation." Stimmt das?',options:['Ja','Nein, es ist ein Vergleich','Nein, es ist eine Metapher'],answer:2,explanation:'Nein! Das Bild eines Blitzes wird auf Gedanken übertragen → Metapher.'},
+{id:'x17',lv:4,type:'free',q:'Bestimme das sprachliche Bild und erkläre warum:\n„Die Nacht breitet ihren Mantel über die Stadt."',keywords:['personifikation','nacht','menschlich','breitet','mantel'],minKeywords:3,selfCheck:true,modelAnswer:'Es ist eine Personifikation, weil die Nacht die menschliche Handlung „breitet ihren Mantel" erhält. (Man könnte auch Metapher für „Mantel" argumentieren.)'},
+{id:'x18',lv:4,type:'free',q:'Bestimme das sprachliche Bild:\n„Der Wald trägt ein Kleid aus Gold."',keywords:['metapher','personifikation','kleid','gold','wald','bildlich'],minKeywords:2,selfCheck:true,modelAnswer:'Es enthält eine Personifikation (der Wald „trägt") und eine Metapher (das goldene Laub wird als „Kleid aus Gold" beschrieben).'},
+{id:'x19',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Die Zeit rennt davon."',options:['Vergleich','Personifikation','Metapher'],answer:1,explanation:'Personifikation! Die Zeit kann nicht rennen.'},
+{id:'x20',lv:2,type:'mc',q:'Welches sprachliche Bild?\n„Wortsalat"',options:['Vergleich','Personifikation','Metapher'],answer:2,explanation:'Metapher! Durcheinander (Salat) wird auf Wörter übertragen.'}
+];
+QBank.pruef=[...QBank.mixed,...QBank.grund.filter(q=>q.lv>=3),...QBank.reim.filter(q=>q.lv>=3).slice(0,10),...QBank.metrum.filter(q=>q.lv>=2).slice(0,8)];
+/*EXAM_SECTION*/
+QBank.exam=[];
+function startExam(){
+let qs=[];
+['grund','reim','metrum','vergleich','person','metapher','mixed'].forEach(tid=>{
+let pool=QBank[tid]||[];
+let picked=shuffle(pool.filter(q=>q.type!=='free')).slice(0,4);
+qs.push(...picked)});
+qs=shuffle(qs).slice(0,25);curQs=qs;curTopic='exam';curLevel=5;curQIdx=0;
+let h=`<div class="exhd"><h2>🏆 Große Abschlussprüfung</h2><p>${qs.length} Fragen aus allen Bereichen</p></div><div id="exArea"></div>`;
+M.innerHTML=h;showQuestion()}
+/*RENDER_BIB*/
+function renderBib(){
+let poems=[
+{title:'Herbstgedicht',text:'Die Blätter fallen sacht,\nder Wind weht durch das Feld,\nes kommt die dunkle Nacht,\ndie Sterne stehn am Zelt.',reim:'abab (Kreuzreim)',themen:'Herbst, Natur'},
+{title:'Sonnenlied',text:'Die Sonne scheint so hell,\nder Bach fließt klar und schnell.\nDie Vögel singen froh,\nim weichen, warmen Stroh.',reim:'aabb (Paarreim)',themen:'Sommer, Natur'},
+{title:'Winterabend',text:'Der Mond steht hoch im Licht,\ndie Wolken ziehen weit,\nder Abend bringt die Zeit,\nein Stern am Himmel bricht.',reim:'abba (Umarmend)',themen:'Winter, Abend'},
+{title:'Frühling',text:'Im Garten blüht es fein,\ndie Bienen summen leis,\nim Sonnenschein so heiß,\ndie Blumen groß und klein.',reim:'abba (Umarmend)',themen:'Frühling, Natur'},
+{title:'Am Strand',text:'Am Strand die Wellen rauschen,\ndie Möwen schreien laut,\nich mag den Wellen lauschen,\nweil mir der Tag vertraut.',reim:'abab (Kreuzreim)',themen:'Meer, Sommer'},
+{title:'Waldspaziergang',text:'Die Bäume stehen still im Wald,\ndie Vögel singen leise,\nes wird schon langsam kalt,\nich geh auf meine Reise.',reim:'abab (Kreuzreim)',themen:'Wald, Wandern'}
+];
+let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><button class="btn btn-g btn-sm" onclick="nav(\'home\')">← Zurück</button><h2>📖 Gedichte-Bibliothek</h2></div>';
+poems.forEach(p=>{h+=`<div class="card"><h3>${p.title}</h3><div class="poem">${p.text}</div><p style="font-size:.85em;color:var(--tl)"><b>Reimschema:</b> ${p.reim} | <b>Themen:</b> ${p.themen}</p></div>`});
+M.innerHTML=h}
+/*RENDER_SATZ*/
+function renderSatz(){
+let cats=[
+{title:'Reimschema bestimmen',starters:['Das Reimschema dieser Strophe ist ein …, weil sich Vers … auf Vers … reimt.','Man erkennt den Paarreim/Kreuzreim/umarmenden Reim daran, dass …','Die Endreime „…" und „…" zeigen, dass es sich um einen … handelt.']},
+{title:'Metrum bestimmen',starters:['Das Metrum dieses Verses ist …, weil die Silben abwechselnd betont und unbetont sind.','Die Betonung lautet: x x́ x x́ …, das heißt …','In diesem Vers wechseln sich Hebungen (betonte Silben) und Senkungen (unbetonte Silben) ab.']},
+{title:'Vergleich erklären',starters:['Die Formulierung „…" ist ein Vergleich, weil … mit … durch das Vergleichswort „wie/als" verbunden wird.','Hier wird … mit … verglichen, weil beide …','Der Vergleich bewirkt, dass man sich … besser vorstellen kann.']},
+{title:'Personifikation erklären',starters:['Die Formulierung „…" ist eine Personifikation, weil … die menschliche Handlung „…" erhält.','Hier wird … personifiziert, da … normalerweise nur von Menschen getan wird.','Die Personifikation macht … lebendig und wirkt …']},
+{title:'Metapher erklären',starters:['Die Metapher „…" überträgt das Bild von … auf …','Dadurch stellt man sich … vor.','Der Ausdruck „…" ist nicht wörtlich gemeint, sondern …']}
+];
+let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><button class="btn btn-g btn-sm" onclick="nav(\'home\')">← Zurück</button><h2>✍️ Satzstarter für die Klassenarbeit</h2></div>';
+h+='<p class="card" style="color:var(--tl)">Nutze diese Satzanfänge, um deine Antworten in der Klassenarbeit gut zu formulieren!</p>';
+cats.forEach(c=>{h+=`<div class="card"><h3>${c.title}</h3>`;c.starters.forEach(s=>{h+=`<div class="ss-c"><div class="starter">📝 ${s}</div></div>`});h+='</div>'});
+M.innerHTML=h}
+/*RENDER_QUICK*/
+function renderQuick(){
+let weak=[];
+TOPICS.slice(0,-1).forEach(t=>{
+let pct=getPct(t.id);if(pct<70&&getTP(t.id).total>0)weak.push(t)});
+if(weak.length===0){
+let all=TOPICS.filter(t=>t.id!=='exam');
+weak=shuffle(all).slice(0,3)}
+let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><button class="btn btn-g btn-sm" onclick="nav(\'home\')">← Zurück</button><h2>⚡ Schnell-Wiederholung</h2></div>';
+h+='<div class="card"><p>Hier sind Themen, bei denen du noch üben kannst:</p></div>';
+weak.forEach(t=>{let pct=getPct(t.id);
+h+=`<div class="card" style="cursor:pointer;border-left:5px solid ${t.color}" onclick="openTopic('${t.id}',2)"><h3>${t.icon} ${t.title}</h3><div class="pbar" style="max-width:200px"><div class="pfill" style="width:${pct}%"></div></div><span style="font-size:.82em;color:var(--tl)">${pct}% – ${pct<50?'Weiter üben!':'Fast geschafft!'}</span></div>`});
+M.innerHTML=h}
+/*RENDER_ELTERN*/
+function renderEltern(){
+let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><button class="btn btn-g btn-sm" onclick="nav(\'home\')">← Zurück</button><h2>👨‍👩‍👧 Eltern-Übersicht</h2></div>';
+h+='<div class="card"><p>Diese Seite zeigt den Lernfortschritt auf einen Blick.</p></div>';
+h+='<div class="card"><h3>📊 Fortschritt nach Themen</h3><table class="pt"><tr><th>Thema</th><th>Richtig</th><th>Gesamt</th><th>%</th><th>Status</th></tr>';
+TOPICS.forEach(t=>{let tp=getTP(t.id);let pct=getPct(t.id);
+let st=pct>=80?'🟢':pct>=40?'🟡':tp.total>0?'🔴':'⚪';
+h+=`<tr><td>${t.icon} ${t.title}</td><td>${tp.correct}</td><td>${tp.total}</td><td>${pct}%</td><td>${st}</td></tr>`});
+h+='</table></div>';
+h+=`<div class="card"><h3>📈 Zusammenfassung</h3><p>🔥 Streak: ${P.streak||0} Tage | ⭐ Sterne: ${P.stars||0} | 🏅 Abzeichen: ${(P.badges||[]).length}/${BADGES.length}</p></div>`;
+h+='<div class="card"><h3>🏅 Abzeichen</h3><div class="badge-r">';
+BADGES.forEach(b=>{let e=(P.badges||[]).includes(b.id);
+h+=`<div class="bdg-i${e?' earned':''}"><div class="bi">${e?b.icon:'🔒'}</div><div class="bn">${b.name}</div></div>`});
+h+='</div></div>';
+h+=`<div class="card" style="text-align:center"><button class="btn btn-d btn-sm" onclick="resetProgress()">🗑️ Fortschritt zurücksetzen</button></div>`;
+M.innerHTML=h}
+/*INIT*/
+loadP();nav('home');
+</script></body></html>
