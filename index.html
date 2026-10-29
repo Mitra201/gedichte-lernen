@@ -95,15 +95,42 @@ h1,h2,h3,h4{line-height:1.3}button{font-family:var(--font);cursor:pointer;border
 .pt th,.pt td{padding:8px 10px;text-align:left;border-bottom:1px solid #B0BEC5}.pt th{background:#455A64;color:#fff;font-size:.85em}.pt tr:hover{background:rgba(0,0,0,.04)}
 .ss-c{background:var(--bgc);border:2px dashed var(--pl);border-radius:var(--r2);padding:14px;margin:6px 0}
 .ss-c .starter{font-weight:600;color:var(--pd);font-size:.98em;line-height:1.6}
+/* TEXTDETEKTIV – DRAG & DROP */
+.td-text{background:linear-gradient(135deg,#FFF8E1,#FFF3E0);border-radius:var(--r2);padding:18px 22px;margin:10px 0;font-size:1.02em;line-height:2;border-left:4px solid var(--sl);position:relative}
+.td-text .td-phrase{display:inline;padding:3px 8px;margin:1px 2px;border-radius:6px;background:linear-gradient(135deg,#E8EAF6,#C5CAE9);border:2px solid #7986CB;cursor:grab;font-weight:600;user-select:none;transition:all .2s;white-space:nowrap;touch-action:none}
+.td-phrase:hover{transform:scale(1.04);box-shadow:0 2px 8px rgba(124,77,255,.2);border-color:var(--p)}
+.td-phrase.dragging{opacity:.4;transform:scale(.95)}
+.td-phrase.placed{opacity:.35;cursor:default;border-style:dashed;background:#E0E0E0;border-color:#BDBDBD}
+.td-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:14px 0}
+.td-cat{background:var(--bgc);border:3px dashed #D0C8E0;border-radius:var(--r);padding:14px;min-height:110px;transition:all .3s}
+.td-cat.over{border-color:var(--p);background:#F3E5F5;box-shadow:0 0 16px rgba(124,77,255,.18)}
+.td-cat .cat-title{font-weight:700;font-size:.95em;margin-bottom:8px;color:var(--pd);text-align:center;padding-bottom:6px;border-bottom:2px solid #E8E0F0}
+.td-cat .cat-items{display:flex;flex-wrap:wrap;gap:6px;min-height:36px}
+.td-cat .cat-item{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;background:linear-gradient(135deg,#E8EAF6,#C5CAE9);border:2px solid #7986CB;font-size:.88em;font-weight:600;cursor:grab;user-select:none;touch-action:none;transition:all .2s}
+.td-cat .cat-item:hover{border-color:var(--err);background:#FFEBEE}
+.td-cat .cat-item .remove-x{font-size:.72em;color:var(--err);cursor:pointer;margin-left:2px;font-weight:700}
+.td-cat.correct{border-color:var(--ok);border-style:solid;background:#E8F5E9}
+.td-cat.wrong{border-color:var(--err);border-style:solid;background:#FFEBEE}
+.td-score{text-align:center;font-size:1.5em;font-weight:800;margin:14px 0;background:linear-gradient(135deg,var(--p),var(--s));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.td-exlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:14px}
+.td-exc{background:var(--bgc);border-radius:var(--r);padding:18px;box-shadow:var(--sh);cursor:pointer;transition:all .3s;border-left:5px solid #FF6D00;position:relative}
+.td-exc:hover{transform:translateY(-3px);box-shadow:var(--sh2)}
+.td-exc .td-icon{font-size:1.6em;margin-bottom:4px}.td-exc .td-tit{font-weight:700;font-size:1em;margin-bottom:2px}.td-exc .td-src{font-size:.8em;color:var(--tl)}
+.td-exc:nth-child(2){border-left-color:#E91E63}.td-exc:nth-child(3){border-left-color:#4CAF50}.td-exc:nth-child(4){border-left-color:#2196F3}
+.td-exc:nth-child(5){border-left-color:#9C27B0}.td-exc:nth-child(6){border-left-color:#FF9800}.td-exc:nth-child(7){border-left-color:#009688}
+.td-exc:nth-child(8){border-left-color:#F44336}.td-exc:nth-child(9){border-left-color:#3F51B5}.td-exc:nth-child(10){border-left-color:#795548}
+.td-exc .td-done{position:absolute;top:8px;right:10px;font-size:1.2em}
+.td-legend{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;justify-content:center}
+.td-legend span{font-size:.82em;padding:4px 10px;border-radius:50px;font-weight:600}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}
 @keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
-@media(max-width:768px){.hd h1{font-size:1.25em}.ct{padding:10px}.card{padding:16px}.hg{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.poem{padding:12px 14px;font-size:.92em}.syl{padding:8px 10px;min-width:40px}}
+@media(max-width:768px){.hd h1{font-size:1.25em}.ct{padding:10px}.card{padding:16px}.hg{grid-template-columns:1fr}.mgrid{grid-template-columns:1fr}.poem{padding:12px 14px;font-size:.92em}.syl{padding:8px 10px;min-width:40px}.td-cats{grid-template-columns:1fr}.td-exlist{grid-template-columns:1fr}.td-text{padding:12px 14px;font-size:.92em}}
 @media(max-width:480px){.hd{padding:12px 8px 10px}.hd h1{font-size:1.1em}.hnav button{padding:4px 8px;font-size:.7em}.hc{padding:12px}.tf{flex-direction:column}.tfb{max-width:100%}.ltab{gap:3px}.lt{padding:5px 10px;font-size:.78em}}
 @media(min-width:1024px){.ct{max-width:920px}.hg{grid-template-columns:repeat(3,1fr)}}
 </style></head>
 <body>
-<div class="hd"><h1>🌟 Inas Gedichte-Abenteuer 🌟</h1><p class="sub">Fit für den Deutschtest – Schritt für Schritt zur sicheren Gedichtanalyse</p><div class="hnav"><button onclick="nav('home')" id="nb-home">🏠 Start</button><button onclick="nav('bib')" id="nb-bib">📖 Bibliothek</button><button onclick="nav('satz')" id="nb-satz">✍️ Satzstarter</button><button onclick="nav('quick')" id="nb-quick">⚡ Wiederholung</button><button onclick="nav('eltern')" id="nb-eltern">👨‍👩‍👧 Für Eltern</button></div></div>
+<div class="hd"><h1>🌟 Inas Gedichte-Abenteuer 🌟</h1><p class="sub">Fit für den Deutschtest – Schritt für Schritt zur sicheren Gedichtanalyse</p><div class="hnav"><button onclick="nav('home')" id="nb-home">🏠 Start</button><button onclick="nav('bib')" id="nb-bib">📖 Bibliothek</button><button onclick="nav('satz')" id="nb-satz">✍️ Satzstarter</button><button onclick="nav('quick')" id="nb-quick">⚡ Wiederholung</button><button onclick="nav('textdet')" id="nb-textdet">🔎 Textdetektiv</button><button onclick="nav('eltern')" id="nb-eltern">👨‍👩‍👧 Für Eltern</button></div></div>
 <div class="ct"><div id="main"></div></div>
 <div id="mbg" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:2000;justify-content:center;align-items:center;padding:16px" onclick="if(event.target===this)closeModal()"><div id="mbox" style="background:#fff;border-radius:16px;padding:28px;max-width:500px;width:100%;box-shadow:0 8px 32px rgba(124,77,255,.18)"></div></div>
 <div id="cft" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:3000;overflow:hidden"></div>
@@ -132,7 +159,8 @@ const BADGES=[
 {id:'vergleich-p',icon:'🔍',name:'Vergleich-Profi',req:{topic:'vergleich',pct:80}},
 {id:'person-p',icon:'🌳',name:'Personifikation-Profi',req:{topic:'person',pct:80}},
 {id:'metapher-p',icon:'💡',name:'Metapher-Profi',req:{topic:'metapher',pct:80}},
-{id:'grund-p',icon:'📚',name:'Grundlagen-Profi',req:{topic:'grund',pct:80}}
+{id:'grund-p',icon:'📚',name:'Grundlagen-Profi',req:{topic:'grund',pct:80}},
+{id:'textdet-p',icon:'🔎',name:'Textdetektivin',req:{topic:'textdet',pct:70}}
 ];
 /* PROGRESS */
 let P={};
@@ -140,7 +168,9 @@ function loadP(){try{P=JSON.parse(localStorage.getItem('iga-progress'))||{}}catc
 if(!P.topics)P.topics={};if(!P.stars)P.stars=0;if(!P.streak)P.streak=0;if(!P.lastDay)P.lastDay='';if(!P.badges)P.badges=[];if(!P.attempts)P.attempts={};if(!P.examResults)P.examResults=[];}
 function saveP(){localStorage.setItem('iga-progress',JSON.stringify(P))}
 function getTP(tid){if(!P.topics[tid])P.topics[tid]={correct:0,wrong:0,total:0,level:0,hints:0};return P.topics[tid]}
-function getPct(tid){let t=getTP(tid);return t.total===0?0:Math.round(t.correct/Math.max(t.total,1)*100)}
+function getPct(tid){
+if(tid==='textdet'){let a=P.attempts&&P.attempts['textdet']?P.attempts['textdet']:{};let done=0;TD_EXERCISES.forEach(ex=>{if(a[ex.id]&&a[ex.id].correct)done++});return TD_EXERCISES.length===0?0:Math.round(done/TD_EXERCISES.length*100)}
+let t=getTP(tid);return t.total===0?0:Math.round(t.correct/Math.max(t.total,1)*100)}
 function recordAnswer(tid,qid,correct,hintsUsed){
 let t=getTP(tid);t.total++;if(correct)t.correct++;else t.wrong++;t.hints+=(hintsUsed||0);
 if(!P.attempts[tid])P.attempts[tid]={};P.attempts[tid][qid]={correct,hints:hintsUsed||0,time:Date.now()};
@@ -166,7 +196,7 @@ function nav(id){curSection=id;$$('.hnav button').forEach(b=>b.classList.remove(
 let nb=$(`#nb-${id}`);if(nb)nb.classList.add('on');
 window.scrollTo({top:0,behavior:'smooth'});
 if(id==='home')renderHome();else if(id==='bib')renderBib();else if(id==='satz')renderSatz();
-else if(id==='quick')renderQuick();else if(id==='eltern')renderEltern();}
+else if(id==='quick')renderQuick();else if(id==='textdet')renderTextDet();else if(id==='eltern')renderEltern();}
 function openTopic(tid,level){renderTopic(tid,level||0)}
 /*HOME*/
 function renderHome(){
@@ -631,6 +661,189 @@ h+='<div class="card"><p>Hier sind Themen, bei denen du noch üben kannst:</p></
 weak.forEach(t=>{let pct=getPct(t.id);
 h+=`<div class="card" style="cursor:pointer;border-left:5px solid ${t.color}" onclick="openTopic('${t.id}',2)"><h3>${t.icon} ${t.title}</h3><div class="pbar" style="max-width:200px"><div class="pfill" style="width:${pct}%"></div></div><span style="font-size:.82em;color:var(--tl)">${pct}% – ${pct<50?'Weiter üben!':'Fast geschafft!'}</span></div>`});
 M.innerHTML=h}
+/*TEXTDETEKTIV_SECTION*/
+const TD_EXERCISES=[
+{id:'td1',title:'Rotkäppchen (Grimm)',icon:'🐺',source:'Märchen – Gebrüder Grimm',
+text:'Die Blumen tanzten im Wind, als Rotkäppchen durch den Wald ging. Die Bäume flüsterten leise wie alte Freunde. Ein Meer von Blättern bedeckte den Boden. Die Sonne lachte vom Himmel und der Weg schlängelte sich wie eine Schlange durch das Dickicht. Die Vögel sangen ein Konzert in den Wipfeln.',
+phrases:[
+{text:'Die Blumen tanzten',cat:'Personifikation'},
+{text:'Die Bäume flüsterten',cat:'Personifikation'},
+{text:'wie alte Freunde',cat:'Vergleich'},
+{text:'Ein Meer von Blättern',cat:'Metapher'},
+{text:'Die Sonne lachte',cat:'Personifikation'},
+{text:'wie eine Schlange',cat:'Vergleich'},
+{text:'ein Konzert in den Wipfeln',cat:'Metapher'}
+],categories:['Metapher','Vergleich','Personifikation']},
+{id:'td2',title:'Schneewittchen (Grimm)',icon:'🍎',source:'Märchen – Gebrüder Grimm',
+text:'Die böse Königin hatte ein Herz aus Stein. Ihr Spiegel sprach wie ein weiser Richter. Schneewittchens Haut war weiß wie Schnee, ihre Lippen rot wie Blut und ihr Haar schwarz wie Ebenholz. Der Wald schluckte sie mit seiner Dunkelheit. Die Nacht legte ihren schwarzen Mantel über das Land.',
+phrases:[
+{text:'ein Herz aus Stein',cat:'Metapher'},
+{text:'wie ein weiser Richter',cat:'Vergleich'},
+{text:'weiß wie Schnee',cat:'Vergleich'},
+{text:'rot wie Blut',cat:'Vergleich'},
+{text:'schwarz wie Ebenholz',cat:'Vergleich'},
+{text:'Der Wald schluckte sie',cat:'Personifikation'},
+{text:'Die Nacht legte ihren schwarzen Mantel',cat:'Personifikation'}
+],categories:['Metapher','Vergleich','Personifikation']},
+{id:'td3',title:'Der Erlkönig (Goethe)',icon:'🌙',source:'Gedicht – Johann W. von Goethe',
+text:'Wer reitet so spät durch Nacht und Wind? Es ist der Vater mit seinem Kind. Das Kind ruht in seinen Armen wie ein Schatz. Die Nebelschwaden greifen nach dem Pferd. Der Erlkönig flüstert süß wie Honig. Die Nacht verschlingt den schmalen Weg. Der Wind heult wie ein wildes Tier durch die Bäume.',
+phrases:[
+{text:'wie ein Schatz',cat:'Vergleich'},
+{text:'Die Nebelschwaden greifen',cat:'Personifikation'},
+{text:'Der Erlkönig flüstert',cat:'Personifikation'},
+{text:'süß wie Honig',cat:'Vergleich'},
+{text:'Die Nacht verschlingt',cat:'Personifikation'},
+{text:'wie ein wildes Tier',cat:'Vergleich'},
+{text:'Der Wind heult',cat:'Personifikation'}
+],categories:['Vergleich','Personifikation']},
+{id:'td4',title:'Die Glocke (Schiller)',icon:'🔔',source:'Gedicht – Friedrich Schiller',
+text:'Die Flamme lodert wie ein hungriges Tier. Das Feuer frisst das Holz gierig auf. Ein Strom von Glut ergießt sich in die Form. Die Glocke ruft die Gemeinde zusammen. Ihre Stimme fliegt wie ein Vogel über das Tal. Die Zeit rinnt dahin wie Sand durch die Finger. Das Schicksal klopft an jede Tür.',
+phrases:[
+{text:'wie ein hungriges Tier',cat:'Vergleich'},
+{text:'Das Feuer frisst',cat:'Personifikation'},
+{text:'Ein Strom von Glut',cat:'Metapher'},
+{text:'Die Glocke ruft',cat:'Personifikation'},
+{text:'wie ein Vogel',cat:'Vergleich'},
+{text:'wie Sand durch die Finger',cat:'Vergleich'},
+{text:'Das Schicksal klopft',cat:'Personifikation'}
+],categories:['Metapher','Vergleich','Personifikation']},
+{id:'td5',title:'Hänsel und Gretel (Grimm)',icon:'🏠',source:'Märchen – Gebrüder Grimm',
+text:'Das Pfefferkuchenhaus war ein süßer Traum aus Zucker. Die Hexe hatte Augen wie glühende Kohlen. Der Ofen gähnte mit seinem riesigen Maul. Die Angst fraß an Hänsel wie ein Wurm. Gretel war schlau wie ein Fuchs. Der Wald hatte tausend Augen. Die Freiheit schmeckte süß.',
+phrases:[
+{text:'ein süßer Traum aus Zucker',cat:'Metapher'},
+{text:'Augen wie glühende Kohlen',cat:'Vergleich'},
+{text:'Der Ofen gähnte',cat:'Personifikation'},
+{text:'wie ein Wurm',cat:'Vergleich'},
+{text:'schlau wie ein Fuchs',cat:'Vergleich'},
+{text:'Der Wald hatte tausend Augen',cat:'Metapher'},
+{text:'Die Freiheit schmeckte süß',cat:'Personifikation'}
+],categories:['Metapher','Vergleich','Personifikation']},
+/*TDEX_MARKER2*/
+{id:'td6',title:'Wandrers Nachtlied (Goethe)',icon:'🌄',source:'Gedicht – Johann W. von Goethe',
+text:'Über allen Gipfeln ist Ruh. Die Wipfel schweigen wie fromme Beter. Der Hauch des Abends legt sich sanft über das Tal. Die Vögelein schlafen im Walde. Der Friede küsst die Stirn der Nacht. Die Berge tragen weiße Hauben aus Schnee. Die Zeit wartet auf niemanden.',
+phrases:[
+{text:'wie fromme Beter',cat:'Vergleich'},
+{text:'Der Hauch des Abends',cat:'Metapher'},
+{text:'Der Friede küsst',cat:'Personifikation'},
+{text:'weiße Hauben aus Schnee',cat:'Metapher'},
+{text:'Die Zeit wartet',cat:'Personifikation'},
+{text:'Die Wipfel schweigen',cat:'Personifikation'}
+],categories:['Metapher','Vergleich','Personifikation']},
+{id:'td7',title:'Loreley (Heine)',icon:'🏔️',source:'Gedicht – Heinrich Heine',
+text:'Die Loreley kämmt ihr goldenes Haar wie fließendes Sonnenlicht. Ihr Gesang fesselt die Schiffer mit unsichtbaren Ketten. Der Rhein schlängelt sich wie eine silberne Schlange durch das Tal. Die Felsen blicken stumm herab. Die Melodie ist ein Netz aus Zauber. Die Wellen tanzen um die Boote und die Abendsonne taucht alles in ein Meer von Gold.',
+phrases:[
+{text:'wie fließendes Sonnenlicht',cat:'Vergleich'},
+{text:'mit unsichtbaren Ketten',cat:'Metapher'},
+{text:'wie eine silberne Schlange',cat:'Vergleich'},
+{text:'Die Felsen blicken stumm herab',cat:'Personifikation'},
+{text:'ein Netz aus Zauber',cat:'Metapher'},
+{text:'Die Wellen tanzen',cat:'Personifikation'},
+{text:'ein Meer von Gold',cat:'Metapher'}
+],categories:['Metapher','Vergleich','Personifikation']},
+{id:'td8',title:'Der Fischer (Goethe)',icon:'🎣',source:'Gedicht – Johann W. von Goethe',
+text:'Das Wasser rauscht, das Wasser schwoll. Die Wellen singen ein uraltes Lied. Die Frau aus dem Wasser lockt wie eine Sirene. Das Meer streckt seine Arme nach dem Fischer aus. Sein Herz wird schwer wie ein Stein. Die Tiefe verschlingt das Licht. Der Mond gießt silbernes Licht wie flüssiges Metall über die See.',
+phrases:[
+{text:'Die Wellen singen',cat:'Personifikation'},
+{text:'wie eine Sirene',cat:'Vergleich'},
+{text:'Das Meer streckt seine Arme',cat:'Personifikation'},
+{text:'schwer wie ein Stein',cat:'Vergleich'},
+{text:'Die Tiefe verschlingt',cat:'Personifikation'},
+{text:'silbernes Licht',cat:'Metapher'},
+{text:'wie flüssiges Metall',cat:'Vergleich'}
+],categories:['Metapher','Vergleich','Personifikation']},
+{id:'td9',title:'Die Stadtmaus und die Feldmaus',icon:'🐭',source:'Fabel – Äsop (nacherzählt)',
+text:'Die Stadt schläft nie – sie ist ein Ozean aus Lärm und Lichtern. Die Feldmaus zitterte wie ein Blatt im Wind. Die Katze schlich leise wie ein Schatten durch den Raum. Die Angst kroch ihr den Rücken hinauf. Das Landleben war ein ruhiger Hafen. Die Sterne funkelten wie Diamanten am Himmel. Die Natur flüsterte dem Mäuschen beruhigende Worte zu.',
+phrases:[
+{text:'ein Ozean aus Lärm und Lichtern',cat:'Metapher'},
+{text:'wie ein Blatt im Wind',cat:'Vergleich'},
+{text:'wie ein Schatten',cat:'Vergleich'},
+{text:'Die Angst kroch',cat:'Personifikation'},
+{text:'ein ruhiger Hafen',cat:'Metapher'},
+{text:'wie Diamanten',cat:'Vergleich'},
+{text:'Die Natur flüsterte',cat:'Personifikation'}
+],categories:['Metapher','Vergleich','Personifikation']},
+{id:'td10',title:'Die Bremer Stadtmusikanten',icon:'🎶',source:'Märchen – Gebrüder Grimm',
+text:'Der Esel trug die Last des Lebens auf seinem Rücken. Der Hund war müde wie ein alter Mann. Die Nacht breitete ihre dunklen Flügel über das Land. Das Licht im Fenster tanzte fröhlich hin und her. Die Räuber flohen schnell wie der Wind. Die Musik der Tiere war ein Donnergrollen in den Ohren der Räuber. Die Angst packte sie am Kragen.',
+phrases:[
+{text:'die Last des Lebens',cat:'Metapher'},
+{text:'müde wie ein alter Mann',cat:'Vergleich'},
+{text:'Die Nacht breitete ihre dunklen Flügel',cat:'Personifikation'},
+{text:'Das Licht tanzte',cat:'Personifikation'},
+{text:'schnell wie der Wind',cat:'Vergleich'},
+{text:'ein Donnergrollen',cat:'Metapher'},
+{text:'Die Angst packte sie',cat:'Personifikation'}
+],categories:['Metapher','Vergleich','Personifikation']}
+];
+let tdPlacements={},tdCurEx=null,tdDragId=null,tdTouchEl=null,tdTouchClone=null;
+function renderTextDet(){
+let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap"><button class="btn btn-g btn-sm" onclick="nav(\'home\')">← Zurück</button><h2>🔎 Textdetektiv – Sprachliche Bilder erkennen</h2></div>';
+h+='<div class="card"><p>Lies die Texte aus <b>Märchen, Gedichten und Fabeln</b> aufmerksam durch. Finde die <b>sprachlichen Bilder</b> (farbig markiert) und ziehe sie per <b>Drag & Drop</b> in die richtige Kategorie!</p>';
+h+='<div class="td-legend"><span style="background:#E8F5E9;border:2px solid #4CAF50">💡 Metapher</span><span style="background:#E3F2FD;border:2px solid #2196F3">🔍 Vergleich</span><span style="background:#F3E5F5;border:2px solid #9C27B0">🌳 Personifikation</span></div></div>';
+let doneCount=0;TD_EXERCISES.forEach(ex=>{if(P.attempts&&P.attempts['textdet']&&P.attempts['textdet'][ex.id])doneCount++});
+h+=`<div class="card" style="text-align:center"><p>Du hast <b>${doneCount}</b> von <b>${TD_EXERCISES.length}</b> Texten geschafft!</p><div class="pbar" style="max-width:300px;margin:8px auto"><div class="pfill" style="width:${Math.round(doneCount/TD_EXERCISES.length*100)}%"></div></div></div>`;
+h+='<div class="td-exlist">';
+TD_EXERCISES.forEach((ex,i)=>{
+let done=P.attempts&&P.attempts['textdet']&&P.attempts['textdet'][ex.id];
+h+=`<div class="td-exc" onclick="startTextEx(${i})"><div class="td-icon">${ex.icon}</div><div class="td-tit">${ex.title}</div><div class="td-src">${ex.source} · ${ex.phrases.length} Begriffe</div>${done?'<div class="td-done">✅</div>':''}</div>`});
+h+='</div>';M.innerHTML=h}
+function startTextEx(idx){
+let ex=TD_EXERCISES[idx];if(!ex)return;tdCurEx=ex;tdPlacements={};
+ex.phrases.forEach((p,i)=>{tdPlacements['p'+i]=null});
+let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap"><button class="btn btn-g btn-sm" onclick="renderTextDet()">← Zurück zur Übersicht</button><h2>'+ex.icon+' '+ex.title+'</h2></div>';
+h+='<div class="card"><h3>📖 Lies den Text und ziehe die markierten Begriffe in die richtige Kategorie:</h3>';
+h+='<div class="td-text" id="tdTextArea">';
+let tc=ex.text;let sp=[...ex.phrases].sort((a,b)=>b.text.length-a.text.length);let phs=[];
+sp.forEach(p=>{let oi=ex.phrases.indexOf(p);let ph='__PH'+oi+'__';tc=tc.replace(p.text,ph);phs.push({ph,oi,text:p.text})});
+phs.forEach(p=>{tc=tc.replace(p.ph,'<span class="td-phrase" draggable="true" id="tdp'+p.oi+'" data-pid="'+p.oi+'" ontouchstart="tdTouchStart(event)" ontouchmove="tdTouchMove(event)" ontouchend="tdTouchEnd(event)">'+p.text+'</span>')});
+h+=tc+'</div>';
+h+='<h3 style="margin:14px 0 6px;color:var(--pd)">📂 Ziehe die Begriffe hierhin:</h3>';
+h+='<div class="td-cats" id="tdCats">';
+ex.categories.forEach((cat,ci)=>{
+let icon=cat==='Metapher'?'💡':cat==='Vergleich'?'🔍':'🌳';
+h+=`<div class="td-cat" id="tdCat${ci}" data-cat="${cat}" ondragover="tdDragOver(event)" ondragleave="tdDragLeave(event)" ondrop="tdDrop(event)"><div class="cat-title">${icon} ${cat}</div><div class="cat-items" id="tdCatItems${ci}"></div></div>`});
+h+='</div><div id="tdFeedback"></div>';
+h+='<div style="text-align:center;margin-top:14px"><button class="btn btn-p" onclick="checkTextEx()">✓ Überprüfen</button> <button class="btn btn-o" onclick="resetTextEx()">🔄 Zurücksetzen</button></div></div>';
+M.innerHTML=h;
+setTimeout(()=>{$$('.td-phrase').forEach(el=>{
+el.addEventListener('dragstart',e=>{if(el.classList.contains('placed'))return e.preventDefault();tdDragId=el.dataset.pid;el.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',el.dataset.pid)});
+el.addEventListener('dragend',e=>{el.classList.remove('dragging')})})},50)}
+function tdTouchStart(e){let el=e.target.closest('.td-phrase');if(!el||el.classList.contains('placed'))return;e.preventDefault();tdTouchEl=el;tdDragId=el.dataset.pid;let r=el.getBoundingClientRect();tdTouchClone=el.cloneNode(true);tdTouchClone.style.cssText='position:fixed;z-index:9999;pointer-events:none;opacity:.85;transform:scale(1.08);box-shadow:0 4px 16px rgba(124,77,255,.3);left:'+r.left+'px;top:'+r.top+'px;width:'+r.width+'px';document.body.appendChild(tdTouchClone);el.classList.add('dragging')}
+function tdTouchMove(e){if(!tdTouchClone)return;e.preventDefault();let t=e.touches[0];tdTouchClone.style.left=(t.clientX-tdTouchClone.offsetWidth/2)+'px';tdTouchClone.style.top=(t.clientY-tdTouchClone.offsetHeight/2)+'px';$$('.td-cat').forEach(c=>{let r=c.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom)c.classList.add('over');else c.classList.remove('over')})}
+function tdTouchEnd(e){if(!tdTouchClone||!tdTouchEl){if(tdTouchClone){tdTouchClone.remove();tdTouchClone=null}return}let t=e.changedTouches[0];$$('.td-cat').forEach(c=>{c.classList.remove('over');let r=c.getBoundingClientRect();if(t.clientX>=r.left&&t.clientX<=r.right&&t.clientY>=r.top&&t.clientY<=r.bottom){placePhraseInCat(tdDragId,c)}});tdTouchClone.remove();tdTouchClone=null;tdTouchEl.classList.remove('dragging');tdTouchEl=null;tdDragId=null}
+function tdDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';e.currentTarget.classList.add('over')}
+function tdDragLeave(e){e.currentTarget.classList.remove('over')}
+function tdDrop(e){e.preventDefault();let cat=e.currentTarget;cat.classList.remove('over');let pid=e.dataTransfer.getData('text/plain')||tdDragId;if(pid==null||pid==='')return;placePhraseInCat(pid,cat)}
+function placePhraseInCat(pid,catEl){
+let ex=tdCurEx;if(!ex)return;let pi=parseInt(pid);let phrase=ex.phrases[pi];if(!phrase)return;let catName=catEl.dataset.cat;
+$$('.cat-item[data-pid="'+pi+'"]').forEach(el=>el.remove());
+tdPlacements['p'+pi]=catName;
+let srcEl=$('#tdp'+pi);if(srcEl)srcEl.classList.add('placed');
+let itemsEl=catEl.querySelector('.cat-items');
+let chip=document.createElement('span');chip.className='cat-item';chip.dataset.pid=pi;chip.draggable=true;
+chip.innerHTML=phrase.text+' <span class="remove-x" onclick="removePhraseFromCat('+pi+',event)">✕</span>';
+chip.setAttribute('ontouchstart','tdCatTouchStart(event)');chip.setAttribute('ontouchmove','tdTouchMove(event)');chip.setAttribute('ontouchend','tdTouchEnd(event)');
+chip.addEventListener('dragstart',e=>{tdDragId=''+pi;chip.classList.add('dragging');e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',''+pi)});
+chip.addEventListener('dragend',e=>{chip.classList.remove('dragging')});itemsEl.appendChild(chip)}
+function tdCatTouchStart(e){let el=e.target.closest('.cat-item');if(!el)return;e.preventDefault();e.stopPropagation();let pid=el.dataset.pid;tdDragId=pid;tdTouchEl=$('#tdp'+pid);let r=el.getBoundingClientRect();tdTouchClone=document.createElement('span');tdTouchClone.className='cat-item';tdTouchClone.textContent=el.textContent.replace('✕','').trim();tdTouchClone.style.cssText='position:fixed;z-index:9999;pointer-events:none;opacity:.85;transform:scale(1.08);box-shadow:0 4px 16px rgba(124,77,255,.3);left:'+r.left+'px;top:'+r.top+'px';document.body.appendChild(tdTouchClone);el.remove();tdPlacements['p'+pid]=null;if(tdTouchEl)tdTouchEl.classList.remove('placed')}
+function removePhraseFromCat(pi,e){e.stopPropagation();tdPlacements['p'+pi]=null;$$('.cat-item[data-pid="'+pi+'"]').forEach(el=>el.remove());let srcEl=$('#tdp'+pi);if(srcEl)srcEl.classList.remove('placed')}
+function resetTextEx(){if(!tdCurEx)return;tdCurEx.phrases.forEach((p,i)=>{tdPlacements['p'+i]=null;let srcEl=$('#tdp'+i);if(srcEl)srcEl.classList.remove('placed')});$$('.cat-items').forEach(el=>{el.innerHTML=''});$$('.td-cat').forEach(c=>{c.classList.remove('correct','wrong')});$('#tdFeedback').innerHTML=''}
+function checkTextEx(){
+let ex=tdCurEx;if(!ex)return;let total=ex.phrases.length,correct=0,allPlaced=true;
+ex.phrases.forEach((p,i)=>{if(tdPlacements['p'+i]===null)allPlaced=false;if(tdPlacements['p'+i]===p.cat)correct++});
+if(!allPlaced){$('#tdFeedback').innerHTML='<div class="fb fb-hint">💡 Du hast noch nicht alle Begriffe zugeordnet! Ziehe alle markierten Wörter in eine Kategorie.</div>';return}
+let pct=Math.round(correct/total*100);
+$$('.td-cat').forEach(catEl=>{let cn=catEl.dataset.cat,ok=true;ex.phrases.forEach((p,i)=>{if(tdPlacements['p'+i]===cn&&p.cat!==cn)ok=false;if(p.cat===cn&&tdPlacements['p'+i]!==cn)ok=false});catEl.classList.remove('correct','wrong');catEl.classList.add(ok?'correct':'wrong')});
+$$('.cat-item').forEach(chip=>{let pi=parseInt(chip.dataset.pid);let p=ex.phrases[pi];let pc=tdPlacements['p'+pi];chip.style.borderColor=pc===p.cat?'var(--ok)':'var(--err)';chip.style.background=pc===p.cat?'#E8F5E9':'#FFEBEE'});
+let fb=$('#tdFeedback');
+if(pct===100){fb.innerHTML='<div class="fb fb-ok">🎉 Perfekt! Alle '+total+' Begriffe richtig zugeordnet!</div>';if(!P.attempts)P.attempts={};if(!P.attempts['textdet'])P.attempts['textdet']={};P.attempts['textdet'][ex.id]={correct:true,pct:100,time:Date.now()};P.stars=(P.stars||0)+2;checkBadges();saveP();fireConfetti()}
+else if(pct>=70){fb.innerHTML='<div class="fb fb-hint">👍 '+correct+' von '+total+' richtig ('+pct+'%). Fast geschafft! Die falschen sind rot markiert – verschiebe sie und prüfe erneut.</div>'}
+else{fb.innerHTML='<div class="fb fb-no">❌ '+correct+' von '+total+' richtig ('+pct+'%).<br><b>Tipp:</b> 🔍 <b>Vergleich</b> = mit „wie/als" · 🌳 <b>Personifikation</b> = Dinge handeln menschlich · 💡 <b>Metapher</b> = bildlicher Ausdruck ohne „wie"</div>'}
+fb.innerHTML+='<div style="margin-top:10px"><button class="btn btn-p btn-sm" onclick="showTextSolution()">📝 Lösung zeigen</button></div>'}
+function showTextSolution(){
+let ex=tdCurEx;if(!ex)return;$$('.cat-items').forEach(el=>{el.innerHTML=''});$$('.td-cat').forEach(c=>{c.classList.remove('correct','wrong');c.classList.add('correct')});
+ex.phrases.forEach((p,i)=>{tdPlacements['p'+i]=p.cat;let srcEl=$('#tdp'+i);if(srcEl)srcEl.classList.add('placed');let ci=ex.categories.indexOf(p.cat);let itemsEl=$('#tdCatItems'+ci);if(!itemsEl)return;let chip=document.createElement('span');chip.className='cat-item';chip.dataset.pid=i;chip.textContent=p.text;chip.style.borderColor='var(--ok)';chip.style.background='#E8F5E9';chip.style.cursor='default';itemsEl.appendChild(chip)});
+if(!P.attempts)P.attempts={};if(!P.attempts['textdet'])P.attempts['textdet']={};if(!P.attempts['textdet'][ex.id])P.attempts['textdet'][ex.id]={correct:false,pct:0,time:Date.now()};saveP();
+$('#tdFeedback').innerHTML='<div class="fb fb-sol">📝 Hier siehst du die richtige Zuordnung aller Begriffe.</div><div style="text-align:center;margin-top:10px"><button class="btn btn-ok" onclick="renderTextDet()">✓ Zurück zur Übersicht</button></div>'}
 /*RENDER_ELTERN*/
 function renderEltern(){
 let h='<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><button class="btn btn-g btn-sm" onclick="nav(\'home\')">← Zurück</button><h2>👨‍👩‍👧 Eltern-Übersicht</h2></div>';
@@ -639,6 +852,9 @@ h+='<div class="card"><h3>📊 Fortschritt nach Themen</h3><table class="pt"><tr
 TOPICS.forEach(t=>{let tp=getTP(t.id);let pct=getPct(t.id);
 let st=pct>=80?'🟢':pct>=40?'🟡':tp.total>0?'🔴':'⚪';
 h+=`<tr><td>${t.icon} ${t.title}</td><td>${tp.correct}</td><td>${tp.total}</td><td>${pct}%</td><td>${st}</td></tr>`});
+let tdDone=0,tdTotal=TD_EXERCISES.length;TD_EXERCISES.forEach(ex=>{if(P.attempts&&P.attempts['textdet']&&P.attempts['textdet'][ex.id]&&P.attempts['textdet'][ex.id].correct)tdDone++});
+let tdPct=tdTotal===0?0:Math.round(tdDone/tdTotal*100);let tdSt=tdPct>=80?'🟢':tdPct>=40?'🟡':tdDone>0?'🔴':'⚪';
+h+=`<tr><td>🔎 Textdetektiv</td><td>${tdDone}</td><td>${tdTotal}</td><td>${tdPct}%</td><td>${tdSt}</td></tr>`;
 h+='</table></div>';
 h+=`<div class="card"><h3>📈 Zusammenfassung</h3><p>🔥 Streak: ${P.streak||0} Tage | ⭐ Sterne: ${P.stars||0} | 🏅 Abzeichen: ${(P.badges||[]).length}/${BADGES.length}</p></div>`;
 h+='<div class="card"><h3>🏅 Abzeichen</h3><div class="badge-r">';
