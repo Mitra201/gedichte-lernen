@@ -250,10 +250,9 @@ function checkAnswer(){
 let q=curQ;if(!q)return;let correct=false;let userAns='';
 switch(q.type){
 case 'mc':if(mcSel<0)return;correct=(mcSel===q.answer);
-$$('.mc').forEach((b,i)=>{b.style.pointerEvents='none';if(i===q.answer)b.classList.add('ok');if(i===mcSel&&!correct)b.classList.add('no')});break;
+if(correct){$$('.mc').forEach((b,i)=>{b.style.pointerEvents='none';if(i===q.answer)b.classList.add('ok')})}break;
 case 'tf':if(tfSel===null)return;correct=(tfSel===q.answer);
-$$('.tfb').forEach(b=>b.style.pointerEvents='none');
-$$('.tfb').forEach((b,i)=>{if((i===0&&q.answer)||(i===1&&!q.answer))b.classList.add('ok');if((i===0&&tfSel&&!correct)||(i===1&&!tfSel&&!correct))b.classList.add('no')});break;
+if(correct){$$('.tfb').forEach(b=>b.style.pointerEvents='none');$$('.tfb').forEach((b,i)=>{if((i===0&&q.answer)||(i===1&&!q.answer))b.classList.add('ok')})}break;
 case 'fill':{ let inp=$('#fillInput');if(!inp||!inp.value.trim())return;userAns=inp.value.trim().toLowerCase();
 let accepts=Array.isArray(q.answer)?q.answer:[q.answer];correct=accepts.some(a=>userAns===a.toLowerCase()||userAns.replace(/[.,!?;:]/g,'')===a.toLowerCase().replace(/[.,!?;:]/g,''));
 inp.classList.add(correct?'ok':'no');if(correct)inp.readOnly=true;break; }
@@ -261,23 +260,40 @@ case 'free':{ let ta=$('#freeInput');if(!ta||!ta.value.trim())return;userAns=ta.
 if(q.keywords){let lw=userAns.toLowerCase();let found=q.keywords.filter(k=>lw.includes(k.toLowerCase()));correct=found.length>=(q.minKeywords||1)}else{correct=true}break; }
 case 'highlight':{ let selW=[];$$('.hw.sel').forEach(w=>selW.push(w.dataset.w));let expW=q.answer.map(w=>w.toLowerCase());
 correct=expW.length===selW.length&&expW.every(w=>selW.includes(w));
-$$('.hw').forEach(w=>{let wl=w.dataset.w;if(expW.includes(wl))w.classList.add('ok');else if(w.classList.contains('sel'))w.classList.add('no')});break; }
+if(correct){$$('.hw').forEach(w=>{let wl=w.dataset.w;if(expW.includes(wl))w.classList.add('ok')})}
+break; }
 case 'syllable':{ let stressed=[];$$('.syl').forEach((s,i)=>{if(s.classList.contains('str'))stressed.push(i)});
 correct=q.answer.length===stressed.length&&q.answer.every(a=>stressed.includes(a));
-$$('.syl').forEach((s,i)=>{s.style.pointerEvents='none';if(q.answer.includes(i))s.classList.add('c-ok');else if(stressed.includes(i))s.classList.add('c-no')});break; }
+if(correct){$$('.syl').forEach((s,i)=>{s.style.pointerEvents='none';if(q.answer.includes(i))s.classList.add('c-ok')})}
+break; }
 case 'rhyme-assign':{ let letters=[];q.verses.forEach((v,i)=>{let sel=$(`#rl${i}`);letters.push(sel?sel.value:'')});correct=letters.join('')===q.answer;break; }
 case 'order':{ let items=[...$('#orderList').children].map(c=>c.dataset.val);correct=items.every((v,i)=>v===q.items[i]);break; }
 case 'match':return;default:correct=false}
 curAttempts++;
 if(q.type==='free'&&q.selfCheck){showSelfCheck(q);return}
 if(correct){P.stars=(P.stars||0)+1;recordAnswer(curTopic,q.id||curQIdx,true,curHints);showFB(true,q.explanation||'Richtig! 🎉');if(Math.random()>.6)fireConfetti()}
-else if(curAttempts>=3){recordAnswer(curTopic,q.id||curQIdx,false,curHints);showFB(false,'📝 '+(q.solution||q.explanation||''),true)}
+else if(curAttempts>=3){recordAnswer(curTopic,q.id||curQIdx,false,curHints);showFB(false,'📝 '+(q.solution||q.explanation||''),true);showSolution(q)}
 else{curHints++;showHint()}}
 /*FEEDBACK*/
+function resetQBody(){let q=curQ;if(!q)return;let body=$('#qBody');if(!body)return;body.innerHTML=renderQBody(q);let d=$('#rhyDisp');if(d)d.innerHTML=''}
+function showSolution(q){
+if(q.type==='syllable'){$$('.syl').forEach((s,i)=>{s.style.pointerEvents='none';s.classList.remove('str');if(q.answer.includes(i)){s.classList.add('str','c-ok')}});updateRhyDisp()}
+else if(q.type==='highlight'){$$('.hw').forEach(w=>{w.style.pointerEvents='none';let wl=w.dataset.w;if(q.answer.map(a=>a.toLowerCase()).includes(wl)){w.classList.add('sel','ok')}else{w.classList.remove('sel')}})}
+else if(q.type==='rhyme-assign'){q.verses.forEach((v,i)=>{let sel=$(`#rl${i}`);if(sel){sel.value=q.answer[i];sel.disabled=true}})}
+else if(q.type==='mc'){$$('.mc').forEach((b,i)=>{b.style.pointerEvents='none';if(i===q.answer)b.classList.add('ok')})}
+else if(q.type==='tf'){$$('.tfb').forEach(b=>b.style.pointerEvents='none');$$('.tfb').forEach((b,i)=>{if((i===0&&q.answer)||(i===1&&!q.answer))b.classList.add('ok')})}
+else if(q.type==='fill'){let inp=$('#fillInput');if(inp){let a=Array.isArray(q.answer)?q.answer[0]:q.answer;inp.value=a;inp.readOnly=true;inp.classList.remove('no');inp.classList.add('ok')}}
+else if(q.type==='order'){let list=$('#orderList');if(list){list.innerHTML='';q.items.forEach((it,i)=>{list.innerHTML+=`<div class="oit" style="border-color:var(--ok)"><span class="on">${i+1}</span><span>${it}</span></div>`})}}
+}
 function showHint(){let q=curQ;let fb=$('#qFeedback');if(!fb)return;
 let hints=q.hints||['Noch nicht ganz. Versuch es noch einmal!','Lies die Frage noch einmal genau durch.'];
 let h=curAttempts<=1?hints[0]:(hints[1]||hints[0]);
-fb.innerHTML=`<div class="fb fb-hint">💡 ${h}</div>`}
+let needsReset=['syllable','highlight','rhyme-assign','order'].includes(q.type);
+fb.innerHTML=`<div class="fb fb-hint">💡 ${h}</div>`;
+if(needsReset){resetQBody()}
+else if(q.type==='fill'){let inp=$('#fillInput');if(inp){inp.classList.remove('ok','no');inp.value='';inp.readOnly=false}}
+else if(q.type==='mc'){mcSel=-1;$$('.mc').forEach(b=>{b.classList.remove('sel','ok','no');b.style.pointerEvents=''})}
+else if(q.type==='tf'){tfSel=null;$$('.tfb').forEach(b=>{b.classList.remove('ok','no');b.style.pointerEvents=''})}}
 function showFB(ok,msg,isSolution){
 let fb=$('#qFeedback');let act=$('#qActions');if(!fb)return;
 if(ok){fb.innerHTML=`<div class="fb fb-ok">✅ ${msg}</div>`;if(act)act.innerHTML=`<button class="btn btn-ok" onclick="nextQ()">Weiter →</button>`}
@@ -439,7 +455,37 @@ QBank.metrum=[
 {id:'m22',lv:3,type:'mc',q:'Welches Muster zeigt: x x́ x x́ x x́ ?',options:['Nur betonte Silben','Abwechselnd unbetont-betont','Abwechselnd betont-unbetont'],answer:1,explanation:'x x́ x x́ x x́ = unbetont-betont-unbetont-betont... (Jambus)'},
 {id:'m23',lv:1,type:'mc',q:'Was markiert man mit x́ (x mit Akzent)?',options:['Eine unbetonte Silbe','Eine betonte Silbe','Ein Reimwort'],answer:1,explanation:'x́ = betonte Silbe (Hebung). x ohne Akzent = unbetonte Silbe (Senkung).'},
 {id:'m24',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Ein Stern am Him-mel steht"',syllables:['Ein','Stern','am','Him','mel','steht'],answer:[1,3,5],explanation:'Ein STÉRN am HÍM-mel STÉHT'},
-{id:'m25',lv:5,type:'free',q:'Schreibe einen Vers mit abwechselnd unbetonten und betonten Silben.',selfCheck:true,modelAnswer:'Beispiel: „Die Sonne scheint so hell" (x x́ x x́ x x́)'}
+{id:'m25',lv:5,type:'free',q:'Schreibe einen Vers mit abwechselnd unbetonten und betonten Silben.',selfCheck:true,modelAnswer:'Beispiel: „Die Sonne scheint so hell" (x x́ x x́ x x́)'},
+{id:'m26',lv:2,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Der Mond scheint hell und klar"',syllables:['Der','Mond','scheint','hell','und','klar'],answer:[1,3,5],explanation:'Der MÓND scheint HÉLL und KLÁR – Jambus: xX xX xX'},
+{id:'m27',lv:2,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Son-ne, Son-ne, schei-ne"',syllables:['Son','ne','Son','ne','schei','ne'],answer:[0,2,4],explanation:'SÓN-ne, SÓN-ne, SCHÉI-ne – Trochäus: Xx Xx Xx'},
+{id:'m28',lv:2,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Es war ein-mal ein Mann"',syllables:['Es','war','ein','mal','ein','Mann'],answer:[1,3,5],explanation:'Es WÁR ein-MÁL ein MÁNN – Jambus: xX xX xX'},
+{id:'m29',lv:2,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Win-ter-nacht und Ster-nen-schein"',syllables:['Win','ter','nacht','und','Ster','nen','schein'],answer:[0,2,4,6],explanation:'WÍN-ter-NÁCHT und STÉR-nen-SCHÉIN'},
+{id:'m30',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Die Blu-men blü-hen im Gar-ten"',syllables:['Die','Blu','men','blü','hen','im','Gar','ten'],answer:[1,3,6],explanation:'Die BLÚ-men BLǗ-hen im GÁR-ten'},
+{id:'m31',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Stil-le Nacht, hei-li-ge Nacht"',syllables:['Stil','le','Nacht','hei','li','ge','Nacht'],answer:[0,2,3,6],explanation:'STÍL-le NÁCHT, HÉI-li-ge NÁCHT'},
+{id:'m32',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Ich ging im Wal-de so für mich hin"',syllables:['Ich','ging','im','Wal','de','so','für','mich','hin'],answer:[1,3,6,8],explanation:'Ich GÍNG im WÁL-de so FǗR mich HÍN (Goethe)'},
+{id:'m33',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Ü-ber al-len Gip-feln ist Ruh"',syllables:['Ü','ber','al','len','Gip','feln','ist','Ruh'],answer:[0,2,4,7],explanation:'Ǘ-ber ÁL-len GÍP-feln ist RÚH (Goethe)'},
+{id:'m34',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Der Früh-ling kommt mit Macht"',syllables:['Der','Früh','ling','kommt','mit','Macht'],answer:[1,3,5],explanation:'Der FRǗH-ling KÓMMT mit MÁCHT – xX xX xX'},
+{id:'m35',lv:2,type:'mc',q:'Welches Versmaß hat „Die BLÁT-ter FÁL-len LÉIS" (xXx Xx X)?',options:['Jambus','Trochäus','Daktylus'],answer:0,explanation:'Die Grundbewegung geht von unbetont zu betont = Jambus.'},
+{id:'m36',lv:2,type:'mc',q:'Wie heißt das Versmaß mit dem Muster Xx Xx Xx?',options:['Jambus','Trochäus','Anapäst'],answer:1,explanation:'Trochäus: BETONT-unbetont (Xx Xx Xx). Wie „SON-ne, SON-ne, SCHEI-ne".'},
+{id:'m37',lv:2,type:'mc',q:'Welches Muster hat der Jambus?',options:['Xx (betont-unbetont)','xX (unbetont-betont)','xxX (unbetont-unbetont-betont)'],answer:1,explanation:'Jambus = xX, also unbetont-betont. Wie „verSTEHN", „geDICHT".'},
+{id:'m38',lv:1,type:'tf',q:'Beim Trochäus ist die erste Silbe betont.',answer:true,explanation:'Richtig! Trochäus = Xx → betont-unbetont. Beispiel: SON-ne, BLU-me.'},
+{id:'m39',lv:1,type:'tf',q:'Beim Jambus ist die erste Silbe betont.',answer:false,explanation:'Nein! Beim Jambus ist die erste Silbe unbetont: xX. Beispiel: Ge-DICHT, ver-STEHN.'},
+{id:'m40',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Am grau-en Strand, am grau-en Meer"',syllables:['Am','grau','en','Strand','am','grau','en','Meer'],answer:[1,3,5,7],explanation:'Am GRÁU-en STRÁND, am GRÁU-en MÉER – Theodor Storm'},
+{id:'m41',lv:3,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Es ist ein Schnee ge-fal-len"',syllables:['Es','ist','ein','Schnee','ge','fal','len'],answer:[1,3,5],explanation:'Es ÍST ein SCHNÉE ge-FÁL-len – Jambus'},
+{id:'m42',lv:4,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Fest ge-mau-ert in der Er-den"',syllables:['Fest','ge','mau','ert','in','der','Er','den'],answer:[0,2,6],explanation:'FÉST ge-MÁU-ert in der ÉR-den (Schiller, Die Glocke)'},
+{id:'m43',lv:4,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Wer rei-tet so spät durch Nacht und Wind"',syllables:['Wer','rei','tet','so','spät','durch','Nacht','und','Wind'],answer:[1,4,6,8],explanation:'Wer RÉI-tet so SPÄT durch NÁCHT und WÍND (Goethe, Erlkönig)'},
+{id:'m44',lv:4,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Es ist der Va-ter mit sei-nem Kind"',syllables:['Es','ist','der','Va','ter','mit','sei','nem','Kind'],answer:[1,3,6,8],explanation:'Es ÍST der VÁ-ter mit SÉI-nem KÍND (Goethe, Erlkönig)'},
+{id:'m45',lv:2,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Leis die Blät-ter fal-len"',syllables:['Leis','die','Blät','ter','fal','len'],answer:[0,2,4],explanation:'LÉIS die BLÄT-ter FÁL-len – Trochäus: Xx Xx Xx'},
+{id:'m46',lv:2,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Der Re-gen fällt so lei-se"',syllables:['Der','Re','gen','fällt','so','lei','se'],answer:[1,3,5],explanation:'Der RÉ-gen FÄLLT so LÉI-se – Jambus'},
+{id:'m47',lv:3,type:'mc',q:'Was ist eine Hebung?',options:['Eine unbetonte Silbe','Eine betonte Silbe','Ein Reim'],answer:1,explanation:'Hebung = betonte Silbe. Das Gegenteil (unbetont) heißt Senkung.'},
+{id:'m48',lv:3,type:'mc',q:'Was ist eine Senkung?',options:['Eine betonte Silbe','Eine unbetonte Silbe','Ein Zeilenumbruch'],answer:1,explanation:'Senkung = unbetonte Silbe. Das Gegenteil (betont) heißt Hebung.'},
+{id:'m49',lv:3,type:'fill',q:'Das Versmaß xX xX xX heißt ___.',answer:['Jambus','jambus'],explanation:'xX xX xX = Jambus (unbetont-betont)'},
+{id:'m50',lv:3,type:'fill',q:'Das Versmaß Xx Xx Xx heißt ___.',answer:['Trochäus','trochäus','Trochaeus','trochaeus'],explanation:'Xx Xx Xx = Trochäus (betont-unbetont)'},
+{id:'m51',lv:4,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Hal-te fest, was du hast"',syllables:['Hal','te','fest','was','du','hast'],answer:[0,2,5],explanation:'HÁL-te FÉST, was du HÁST'},
+{id:'m52',lv:4,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Freu-de, schö-ner Göt-ter-fun-ken"',syllables:['Freu','de','schö','ner','Göt','ter','fun','ken'],answer:[0,2,4,6],explanation:'FRÉU-de SCHÖ-ner GÖT-ter-FÚN-ken (Schiller) – Trochäus'},
+{id:'m53',lv:4,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Du bist wie ei-ne Blu-me"',syllables:['Du','bist','wie','ei','ne','Blu','me'],answer:[1,3,5],explanation:'Du BÍST wie ÉI-ne BLÚ-me (Heine) – Jambus'},
+{id:'m54',lv:4,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Das Was-ser rauscht, das Was-ser schwoll"',syllables:['Das','Was','ser','rauscht','das','Was','ser','schwoll'],answer:[1,3,5,7],explanation:'Das WÁS-ser RÁUSCHT, das WÁS-ser SCHWÓLL (Goethe)'},
+{id:'m55',lv:5,type:'syllable',q:'Markiere die betonten Silben:',instruction:'„Und es wal-let und sie-det und brau-set und zischt"',syllables:['Und','es','wal','let','und','sie','det','und','brau','set','und','zischt'],answer:[2,5,8,11],explanation:'Und es WÁL-let und SIÉ-det und BRÁU-set und ZÍSCHT (Schiller)'}
 ];
 /*VERGLEICH_QUESTIONS*/
 QBank.vergleich=[
